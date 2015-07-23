@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="*/*" template="layouts/layout">
+        <put-attribute name="title" value="title/{1}/{2}" />
+        <put-attribute name="content" value="content/{1}/{2}" />
+    </definition>
+
+    <definition name="title/*/*" template="{1}/{2} :: title" />
+    <definition name="content/*/*" template="{1}/{2} :: content" />
+
+</tiles-definitions>

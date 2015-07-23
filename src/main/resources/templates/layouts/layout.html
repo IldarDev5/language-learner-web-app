@@ -1,0 +1,21 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title tiles:include="title">Layout title</title>
+    <script type="text/javascript" src="/scripts/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="layouts/header :: content">
+    The header
+</div>
+
+<div tiles:replace="content">
+    The content
+</div>
+
+<div th:replace="layouts/footer :: content">
+    Footer (c) 2015
+</div>
+
+</body>
+</html>
