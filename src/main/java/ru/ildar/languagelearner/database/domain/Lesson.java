@@ -3,26 +3,33 @@ package ru.ildar.languagelearner.database.domain;
 import javax.persistence.*;
 import java.util.Date;
 
+/** Lesson in a cluster - contains pairs "sentence-translation" in cluster defined languages. */
 @Entity
 public class Lesson
 {
+    /** Lesson's primary key */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long lessonId;
 
+    /** Header of the lesson */
     @Column(length = 100, nullable = false)
     private String lessonName;
 
+    /** Short description of the lesson */
     @Column(length = 300)
     private String description;
 
+    /** Lessons cluster this lesson pertains to */
     @ManyToOne
     @JoinColumn(name = "cluster_id", nullable = false)
     private Cluster cluster;
 
+    /** Date of this lesson creation */
     @Temporal(TemporalType.TIMESTAMP)
     private Date addDate;
 
+    /** Average grade received by the user on all trainings involving this lesson */
     @Column(nullable = false)
     private double averageGrade = 0.0;
 

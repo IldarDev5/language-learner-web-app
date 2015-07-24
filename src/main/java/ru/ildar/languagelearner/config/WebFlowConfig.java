@@ -16,6 +16,8 @@ import org.springframework.webflow.security.SecurityFlowExecutionListener;
 
 import java.util.Arrays;
 
+/**
+ * Configuration class for Spring WebFlow. */
 @Configuration
 public class WebFlowConfig extends AbstractFlowConfiguration
 {

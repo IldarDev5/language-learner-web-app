@@ -2,21 +2,29 @@ package ru.ildar.languagelearner.database.domain;
 
 import javax.persistence.*;
 
+/**
+ * Entity that stores credentials and other information about application user */
 @Entity
 public class AppUser
 {
+    /** User's primary key */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    /** User's nickname for logging in */
     @Column(length = 100, nullable = false, unique = true)
     private String nickname;
+    /** First name */
     @Column(length = 100)
     private String firstName;
+    /** Last name */
     @Column(length = 100)
     private String lastName;
+    /** User's E-Mail address */
     @Column(length = 100, nullable = false, unique = true)
     private String email;
+    /** User's password for logging in */
     @Column(length = 50, nullable = false)
     private String password;
 

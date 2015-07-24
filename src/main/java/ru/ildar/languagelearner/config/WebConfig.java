@@ -14,6 +14,8 @@ import org.thymeleaf.extras.tiles2.spring4.web.view.FlowAjaxThymeleafTilesView;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.AjaxThymeleafViewResolver;
 
+/**
+ * Configuration class for Spring MVC */
 @Configuration
 @EntityScan(basePackages = "ru.ildar.languagelearner.database.domain")
 @EnableJpaRepositories(basePackages = "ru.ildar.languagelearner.database.dao")
@@ -22,6 +24,8 @@ public class WebConfig extends WebMvcConfigurerAdapter
     @Autowired
     private SpringTemplateEngine springTemplateEngine;
 
+    /**
+     * Thymeleaf view resolver that supports Spring WebFlow and Apache Tiles */
     @Bean
     public AjaxThymeleafViewResolver thymeleafViewResolver()
     {

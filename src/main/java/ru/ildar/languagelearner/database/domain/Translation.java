@@ -2,31 +2,38 @@ package ru.ildar.languagelearner.database.domain;
 
 import javax.persistence.*;
 
+/** Pair of sentences. One sentence is the translation of another sentence in its language. */
 @Entity
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"lesson_id", "sentence1", "sentence2"})
 })
 public class Translation
 {
+    /** Entity's primary key */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long translationId;
 
+    /** Lesson this translation pertains to */
     @ManyToOne
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
 
+    /** Language of the first sentence of this pair */
     @ManyToOne
     @JoinColumn(name = "sentence1_language_name", nullable = false)
     private Language sentence1Language;
 
+    /** First sentence of this pair */
     @Column(length = 500, nullable = false)
     private String sentence1;
 
+    /** Language of the second sentence of this pair */
     @ManyToOne
     @JoinColumn(name = "sentence2_language_name", nullable = false)
     private Language sentence2Language;
 
+    /** Second sentence of this pair */
     @Column(length = 500, nullable = false)
     private String sentence2;
 

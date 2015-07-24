@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+/**
+ * Configuration class for Spring Security */
 @Configuration
 @EnableWebMvcSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter
