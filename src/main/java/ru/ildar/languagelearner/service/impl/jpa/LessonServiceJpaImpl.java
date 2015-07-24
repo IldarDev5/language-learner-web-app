@@ -1,4 +1,4 @@
-package ru.ildar.languagelearner.service.impl.impl;
+package ru.ildar.languagelearner.service.impl.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.ildar.languagelearner.database.dao.LessonRepository;

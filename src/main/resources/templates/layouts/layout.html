@@ -1,12 +1,42 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title tiles:include="title">Layout title</title>
+    <link href="/css/tooplate_style.css" rel="stylesheet" type="text/css" />
+
+    <script language="javascript" type="text/javascript">
+        function clearText(field)
+        {
+            if (field.defaultValue == field.value) field.value = '';
+            else if (field.value == '') field.value = field.defaultValue;
+        }
+    </script>
     <script type="text/javascript" src="/scripts/jquery.min.js"></script>
 </head>
+
 <body>
+
 <div th:replace="layouts/header :: content">
     The header
+</div>
+
+<div id="tooplate_middle_wrapper">
+    <div id="tooplate_middle">
+
+        <img src="/images/tooplate_image_01.jpg" alt="Image 01" />
+
+        <div id="middle_content">
+            <h2>Lorem ipsum dolor sit amet</h2>
+            <p>Nullam in justo lacus, id viverra elit. Ut dignissim auctor purus, id vestibulum turpis rutrum eget. Maecenas ut ipsum pellentesque purus ullamcorper fringilla. Nunc in turpis non nisi egestas convallis in at massa.</p>
+            <div class="wwu_btn"><a href="#"></a></div>
+        </div>
+
+    </div>
+</div>
+
+<div th:replace="layouts/menu :: content">
+    Menu
 </div>
 
 <div tiles:replace="content">

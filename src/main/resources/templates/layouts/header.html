@@ -5,15 +5,31 @@
 </head>
 <body>
     <div th:fragment="content">
-        <ul>
-            <li><a href="/mainPage">To Main Page</a></li>
-            <th:block sec:authorize="isAnonymous()">
-                <li><a href="/auth/login">Log In</a></li>
-                <li><a href="/register">Registration</a></li>
-            </th:block>
-            <th:block sec:authorize="isAuthenticated()">
-            </th:block>
-        </ul>
+        <div id="tooplate_header_wrapper">
+            <div id="tooplate_header">
+
+                <div id="site_title">
+                    <h1>
+                        <a href="http://www.tooplate.com" rel="nofollow">
+                            <img src="/images/tooplate_logo.png" alt="logo" />
+                            <span>Language Learner</span>
+                        </a>
+                    </h1>
+                </div>
+
+                <div id="header_right">
+                    <div id="search_box">
+                        <form action="#" method="get">
+                            <input type="text" value="Search" name="q" size="10"
+                                   id="searchfield" title="searchfield" onfocus="clearText(this)"
+                                   onblur="clearText(this)" />
+                            <input type="submit" name="Search" value="" id="searchbutton"
+                                   title="Search" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

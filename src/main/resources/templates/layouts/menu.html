@@ -1,0 +1,24 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+</head>
+<body>
+    <div th:fragment="content">
+        <div id="tooplate_menu">
+
+            <ul>
+                <li><a href="/mainPage">To Main Page</a></li>
+                <th:block sec:authorize="isAnonymous()">
+                    <li><a href="/auth/login">Log In</a></li>
+                    <li><a href="/register">Registration</a></li>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                </th:block>
+            </ul>
+
+            <div class="cleaner"></div>
+        </div>
+    </div>
+</body>
+</html>
