@@ -1,0 +1,59 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title tiles:fragment="title">Language Learner - Registration</title>
+</head>
+<body>
+    <div tiles:fragment="content">
+        <h2>Registration</h2>
+        <form method="post" th:action="@{/auth/registration}" th:object="${user}">
+            <fieldset>
+                <legend>Registration form</legend>
+                <table>
+                    <tr>
+                        <td><label th:for="nickname">Nickname:</label></td>
+                        <td><input type="text" th:field="*{nickname}" /></td>
+                        <td><span style="color: red;" th:if="${#fields.hasErrors('nickname')}"
+                                  th:errors="*{nickname}" /></td>
+                    </tr>
+                    <tr>
+                        <td><label th:for="email">E-Mail:</label></td>
+                        <td><input type="text" th:field="*{email}" /></td>
+                        <td><span style="color: red;" th:if="${#fields.hasErrors('email')}"
+                                  th:errors="*{email}" /></td>
+                    </tr>
+                    <tr>
+                        <td><label th:for="password">Password:</label></td>
+                        <td><input type="password" th:field="*{password}" /></td>
+                        <td><span style="color: red;" th:if="${#fields.hasErrors('password')}"
+                                  th:errors="*{password}" /></td>
+                    </tr>
+                    <tr>
+                        <td><label th:for="repeatPassword">Repeat password:</label></td>
+                        <td><input type="password" th:field="*{repeatPassword}" /></td>
+                        <td><span style="color: red;" th:if="${#fields.hasErrors('repeatPassword')}"
+                                  th:errors="*{repeatPassword}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Optional fields</td>
+                    </tr>
+                    <tr>
+                        <td><label th:for="firstName">First name:</label></td>
+                        <td><input type="text" th:field="*{firstName}" /></td>
+                        <td><span style="color: red;"
+                                  th:if="${#fields.hasErrors('firstName')}"
+                                  th:errors="*{firstName}" /></td>
+                    </tr>
+                    <tr>
+                        <td><label th:for="lastName">Last name:</label></td>
+                        <td><input type="text" th:field="*{lastName}" /></td>
+                        <td><span style="color: red;" th:if="${#fields.hasErrors('lastName')}"
+                                  th:errors="*{lastName}" /></td>
+                    </tr>
+                </table>
+                <input type="submit" value="Submit" />
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>

@@ -5,15 +5,27 @@
 </head>
 <body>
     <div th:fragment="content">
+        <script type="text/javascript">
+            function logout() {
+                $('#logoutForm').submit();
+            }
+        </script>
         <div id="tooplate_menu">
 
             <ul>
                 <li><a href="/mainPage">To Main Page</a></li>
                 <th:block sec:authorize="isAnonymous()">
                     <li><a href="/auth/login">Log In</a></li>
-                    <li><a href="/register">Registration</a></li>
+                    <li><a href="/auth/registration">Registration</a></li>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
+                    <li>
+                        <a href="javascript:logout();">Logout</a>
+                        <form method="post" action="/logout" id="logoutForm" style="display: none;">
+                            <input type="hidden"
+                                   th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        </form>
+                    </li>
                 </th:block>
             </ul>
 

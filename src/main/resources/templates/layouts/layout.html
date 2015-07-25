@@ -39,8 +39,10 @@
     Menu
 </div>
 
-<div tiles:replace="content">
-    The content
+<div id="tooplate_content">
+    <div tiles:replace="content">
+        The content
+    </div>
 </div>
 
 <div th:replace="layouts/footer :: content">
