@@ -23,9 +23,9 @@ public class UserDTO
     @Email
     private String email;
 
-    @Size(max = 100)
+    @Size(min = 2, max = 100)
     private String firstName;
-    @Size(max = 100)
+    @Size(min = 2, max = 100)
     private String lastName;
 
     public String getNickname()

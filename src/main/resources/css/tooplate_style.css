@@ -233,6 +233,14 @@ em { color: #000; }
 	margin-left: 5px; 
 }
 
+#greeting {
+    float: left;
+    color: #9a9a9a;
+    font-size: 16px;
+    padding-top: 75px;
+    margin-left: 15px;
+}
+
 #tooplate_header #header_right { 
 	float: right;  
 	padding-top: 10px; 

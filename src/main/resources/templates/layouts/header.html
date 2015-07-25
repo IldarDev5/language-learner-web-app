@@ -17,6 +17,14 @@
                     </h1>
                 </div>
 
+                <!--@thymesVar id="userFirstName" type="java.lang.String"-->
+                <div sec:authorize="isAuthenticated()" id="greeting" th:switch="${userFirstName}">
+                    <th:block th:case="${null}"
+                              th:text="|Welcome, ${#httpServletRequest.userPrincipal.name}!|" />
+                    <th:block th:case="*"
+                            th:text="|Welcome, ${userFirstName}!|" />
+                </div>
+
                 <div id="header_right">
                     <div id="search_box">
                         <form action="#" method="get">

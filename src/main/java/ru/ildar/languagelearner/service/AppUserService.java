@@ -1,6 +1,7 @@
 package ru.ildar.languagelearner.service;
 
 import ru.ildar.languagelearner.controller.dto.UserDTO;
+import ru.ildar.languagelearner.database.domain.AppUser;
 import ru.ildar.languagelearner.exception.EmailAlreadyExistsException;
 import ru.ildar.languagelearner.exception.NicknameAlreadyExistsException;
 
@@ -15,4 +16,6 @@ public interface AppUserService
      */
     Long addNewUser(UserDTO userDTO)
             throws NicknameAlreadyExistsException, EmailAlreadyExistsException;
+
+    AppUser getUserByNickname(String name);
 }

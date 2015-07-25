@@ -61,4 +61,10 @@ public class AppUserServiceJpaImpl implements UserDetailsService, AppUserService
 
         return appUserRepository.save(appUser).getUserId();
     }
+
+    @Override
+    public AppUser getUserByNickname(String nickname)
+    {
+        return appUserRepository.findByNickname(nickname);
+    }
 }
