@@ -6,6 +6,8 @@ import ru.ildar.languagelearner.database.dao.LanguageRepository;
 import ru.ildar.languagelearner.service.LanguageService;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @Transactional
@@ -13,4 +15,10 @@ public class LanguageServiceJpaImpl implements LanguageService
 {
     @Autowired
     private LanguageRepository languageRepository;
+
+    @Override
+    public List<String> getLanguagesAsStrings()
+    {
+        return languageRepository.findAllGetLanguagesNames();
+    }
 }

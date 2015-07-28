@@ -33,7 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .loginPage("/auth/login").loginProcessingUrl("/auth/login")
                 .defaultSuccessUrl("/mainPage").failureUrl("/auth/login?auth=fail")
                 .usernameParameter("username").passwordParameter("password")
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/mainPage");
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/mainPage")
+                .and().authorizeRequests()
+                        .antMatchers("/cluster/**").access("hasRole('ROLE_USER')");
     }
 
     @Bean
