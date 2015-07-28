@@ -28,12 +28,6 @@ public class RegistrationController
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView registrationPage(UserDTO userDTO)
     {
-        if(userDTO == null)
-        {
-            System.err.println("userDTO == null");
-            userDTO = new UserDTO();
-        }
-
         return new ModelAndView("auth/registration", "user", userDTO);
     }
 
@@ -49,7 +43,7 @@ public class RegistrationController
 
         if(!userDTO.getPassword().equals(userDTO.getRepeatPassword()))
         {
-            bindingResult.rejectValue("password", "Passwords do not match.");
+            bindingResult.rejectValue("password", null, "Passwords do not match.");
             return registrationPage(userDTO);
         }
 
@@ -59,12 +53,12 @@ public class RegistrationController
         }
         catch (NicknameAlreadyExistsException e)
         {
-            bindingResult.rejectValue("nickname", "User with such nickname is already present.");
+            bindingResult.rejectValue("nickname", null, "User with such nickname is already present.");
             return registrationPage(userDTO);
         }
         catch (EmailAlreadyExistsException e)
         {
-            bindingResult.rejectValue("email", "User with such E-Mail is already present.");
+            bindingResult.rejectValue("email", null, "User with such E-Mail is already present.");
             return registrationPage(userDTO);
         }
 

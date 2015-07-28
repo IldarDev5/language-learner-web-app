@@ -17,8 +17,6 @@ import org.thymeleaf.spring4.view.AjaxThymeleafViewResolver;
 /**
  * Configuration class for Spring MVC */
 @Configuration
-@EntityScan(basePackages = "ru.ildar.languagelearner.database.domain")
-@EnableJpaRepositories(basePackages = "ru.ildar.languagelearner.database.dao")
 public class WebConfig extends WebMvcConfigurerAdapter
 {
     @Autowired
