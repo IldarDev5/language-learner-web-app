@@ -14,25 +14,25 @@
                         <td><label th:for="nickname">Nickname:</label></td>
                         <td><input type="text" th:field="*{nickname}" /></td>
                         <td><span style="color: red;" th:if="${#fields.hasErrors('nickname')}"
-                                  th:errors="*{nickname}" /></td>
+                                  th:errors="*{nickname}" ></span></td>
                     </tr>
                     <tr>
                         <td><label th:for="email">E-Mail:</label></td>
                         <td><input type="text" th:field="*{email}" /></td>
                         <td><span style="color: red;" th:if="${#fields.hasErrors('email')}"
-                                  th:errors="*{email}" /></td>
+                                  th:errors="*{email}" ></span></td>
                     </tr>
                     <tr>
                         <td><label th:for="password">Password:</label></td>
                         <td><input type="password" th:field="*{password}" /></td>
                         <td><span style="color: red;" th:if="${#fields.hasErrors('password')}"
-                                  th:errors="*{password}" /></td>
+                                  th:errors="*{password}" ></span></td>
                     </tr>
                     <tr>
                         <td><label th:for="repeatPassword">Repeat password:</label></td>
                         <td><input type="password" th:field="*{repeatPassword}" /></td>
                         <td><span style="color: red;" th:if="${#fields.hasErrors('repeatPassword')}"
-                                  th:errors="*{repeatPassword}" /></td>
+                                  th:errors="*{repeatPassword}" ></span></td>
                     </tr>
                     <tr>
                         <td>Optional fields</td>
@@ -42,13 +42,13 @@
                         <td><input type="text" th:field="*{firstName}" /></td>
                         <td><span style="color: red;"
                                   th:if="${#fields.hasErrors('firstName')}"
-                                  th:errors="*{firstName}" /></td>
+                                  th:errors="*{firstName}" ></span></td>
                     </tr>
                     <tr>
                         <td><label th:for="lastName">Last name:</label></td>
                         <td><input type="text" th:field="*{lastName}" /></td>
                         <td><span style="color: red;" th:if="${#fields.hasErrors('lastName')}"
-                                  th:errors="*{lastName}" /></td>
+                                  th:errors="*{lastName}" ></span></td>
                     </tr>
                 </table>
                 <input type="submit" value="Submit" />

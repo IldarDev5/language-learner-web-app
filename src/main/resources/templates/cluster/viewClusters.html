@@ -1,0 +1,27 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title tiles:fragment="title">View Clusters</title>
+</head>
+<body>
+    <div tiles:fragment="content">
+        <h2>View clusters</h2>
+        <table border="1">
+            <tr>
+                <th>Language 1</th>
+                <th>Language 2</th>
+                <th>View Info</th>
+                <th>View lessons</th>
+            </tr>
+            <!--@thymesVar id="clusters" type="java.util.List<ru.ildar.languagelearner.database.domain.Cluster>"-->
+            <tr th:each="cls : ${clusters}" th:object="${cls}">
+                <td th:text="*{language1.defaultName}">English</td>
+                <th th:text="*{language2.defaultName}">Russian</th>
+                <td><a th:href="@{/cluster/viewCluster/__*{clusterId}__}">View info</a></td>
+                <td><a th:href="@{/lessons/viewLessons(clusterId=${cls.clusterId})}">
+                    View lessons</a></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

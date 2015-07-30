@@ -1,6 +1,7 @@
 package ru.ildar.languagelearner.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -14,10 +15,13 @@ import ru.ildar.languagelearner.exception.LanguageNotFoundException;
 import ru.ildar.languagelearner.exception.LanguagesAreEqualException;
 import ru.ildar.languagelearner.service.ClusterService;
 import ru.ildar.languagelearner.service.LanguageService;
+import ru.ildar.languagelearner.service.LessonService;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/cluster")
@@ -27,11 +31,13 @@ public class ClusterController
     private ClusterService clusterService;
     @Autowired
     private LanguageService languageService;
+    @Autowired
+    private LessonService lessonService;
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public ModelAndView createClusterPage(ClusterDTO clusterDTO, ModelMap model)
     {
-        model.addAttribute(languageService.getLanguagesAsStrings());
+        model.addAttribute("languages", languageService.getLanguagesAsStrings());
         return new ModelAndView("cluster/create", "cluster", clusterDTO);
     }
 
@@ -80,7 +86,7 @@ public class ClusterController
 
     @RequestMapping(value = "viewCluster/{id}", method = RequestMethod.GET)
     public ModelAndView viewCluster(@PathVariable("id") Long id,
-                                    @RequestParam("created") Boolean created,
+                                    @RequestParam(value = "created", required = false) Boolean created,
                                     ModelMap model,
                                     Principal principal)
     {
@@ -91,10 +97,23 @@ public class ClusterController
             throw new ClusterNotOfThisUserException();
         }
 
-        if(created)
+        if(created != null && created)
         {
             model.addAttribute("created", true);
         }
-        return new ModelAndView("cluster/viewCluster", "cluster", cluster);
+        model.addAttribute("lessonsCount", lessonService.getLessons(cluster).size());
+        return new ModelAndView("cluster/viewCluster", "cls", cluster);
+    }
+
+    @RequestMapping(value = "checkClusterExistence", method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> checkClusterExistence(@RequestParam("lang1") String lang1,
+                                                     @RequestParam("lang2") String lang2)
+    {
+        boolean exists = clusterService.checkClusterExistence(lang1, lang2);
+        Map<String, Object> map = new HashMap<>();
+        map.put("exists", exists);
+        return map;
     }
 }

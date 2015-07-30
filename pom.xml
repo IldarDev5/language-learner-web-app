@@ -15,15 +15,11 @@
       <maven.compiler.target>1.8</maven.compiler.target>
       <maven.compiler.fork>true</maven.compiler.fork>
 
-      <java.version>1.8</java.version>
-
       <thymeleaf.tiles.version>2.1.1.RELEASE</thymeleaf.tiles.version>
       <tiles2.version>2.2.2</tiles2.version>
       <postgresql.version>9.2-1003-jdbc4</postgresql.version>
       <jstl.version>1.2</jstl.version>
       <jwebunit.version>3.1</jwebunit.version>
-
-      <mockito.version>1.9.5</mockito.version>
 
       <spring.datasource.url>jdbc:postgresql://OPENSHIFT_POSTGRESQL_DB_HOST:OPENSHIFT_POSTGRESQL_DB_PORT/OPENSHIFT_APP_NAME</spring.datasource.url>
       <spring.datasource.username>OPENSHIFT_POSTGRESQL_DB_USERNAME</spring.datasource.username>

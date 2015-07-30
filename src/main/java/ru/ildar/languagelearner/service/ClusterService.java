@@ -16,4 +16,6 @@ public interface ClusterService
     List<Cluster> getClustersOfUser(String nickname);
 
     Cluster getClusterById(Long id);
+
+    boolean checkClusterExistence(String lang1, String lang2);
 }

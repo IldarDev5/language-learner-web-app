@@ -1,0 +1,56 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title tiles:fragment="title">Create Cluster</title>
+</head>
+<body>
+    <div tiles:fragment="content">
+        <script type="text/javascript" src="/scripts/createCluster.js"></script>
+
+        <h2>Create cluster</h2>
+        <span style="color: red;" id="submitErr"></span>
+        <form method="post" th:action="@{/cluster/create}" th:object="${cluster}">
+            <fieldset>
+                <legend>Choose cluster languages</legend>
+                <span style="color: red;" th:if="${#fields.hasErrors('*')}" th:errors="*" ></span>
+                <table>
+
+                    <tr>
+                        <td><label th:for="language1">Select first language:</label></td>
+                        <td>
+                            <select th:field="*{language1}" th:remove="all-but-first">
+                                <!--@thymesVar id="languages" type="java.util.List<java.lang.String>"-->
+                                <option th:each="lang : ${languages}" th:value="${lang}"
+                                        th:text="${lang}">English</option>
+                                <option>Russian</option>
+                                <option>German</option>
+                            </select>
+                        </td>
+                        <td><span style="color: red;" th:if="${#fields.hasErrors('language1')}"
+                                  th:errors="*{language1}" ></span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label th:for="language2">Select second language:</label></td>
+                        <td>
+                            <select th:field="*{language2}" th:remove="all-but-first">
+                                <!--@thymesVar id="languages" type="java.util.List<java.lang.String>"-->
+                                <option th:each="lang : ${languages}" th:value="${lang}"
+                                        th:text="${lang}">Russian</option>
+                                <option>English</option>
+                                <option>German</option>
+                            </select>
+                        </td>
+                        <td><span style="color: red;" th:if="${#fields.hasErrors('language2')}"
+                                  th:errors="*{language2}"></span>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type="submit" th:value="Submit" />
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>

@@ -76,4 +76,14 @@ public class ClusterServiceJpaImpl implements ClusterService
     {
         return clusterRepository.findOne(id);
     }
+
+    @Override
+    public boolean checkClusterExistence(String lang1, String lang2)
+    {
+        Language l1 = languageRepository.findByDefaultName(lang1);
+        Language l2 = languageRepository.findByDefaultName(lang2);
+
+        return clusterRepository.findByLanguage1AndLanguage2(l1, l2) != null
+                || clusterRepository.findByLanguage1AndLanguage2(l2, l1) != null;
+    }
 }

@@ -19,6 +19,8 @@
                     <li><a href="/auth/registration">Registration</a></li>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
+                    <li><a href="/cluster/create">Create cluster</a></li>
+                    <li><a href="/cluster/viewClusters">View clusters</a></li>
                     <li>
                         <a href="javascript:logout();">Logout</a>
                         <form method="post" action="/logout" id="logoutForm" style="display: none;">
