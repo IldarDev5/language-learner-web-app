@@ -35,13 +35,13 @@ public class ClusterController
     private LessonService lessonService;
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public ModelAndView createClusterPage(ClusterDTO clusterDTO, ModelMap model)
+    public ModelAndView createClusterPage(ClusterDTO clusterDTO, ModelMap model, Principal principal)
     {
         /* Adding a pair of two languages to view in <select>s
           the cluster for which doesn't exist. This helps to
           get rid of a bug when a pair of languages is visualized
           for which there is already existing cluster. */
-        model.addAttribute("langPair", clusterService.getNonExistentLanguagePair());
+        model.addAttribute("langPair", clusterService.getNonExistentLanguagePair(principal.getName()));
         model.addAttribute("languages", languageService.getLanguagesAsStrings());
         return new ModelAndView("cluster/create", "cluster", clusterDTO);
     }
@@ -53,7 +53,7 @@ public class ClusterController
     {
         if(bindingResult.hasFieldErrors())
         {
-            return createClusterPage(clusterDTO, model);
+            return createClusterPage(clusterDTO, model, principal);
         }
 
         long clusterId;
@@ -64,18 +64,18 @@ public class ClusterController
         catch (LanguagesAreEqualException e)
         {
             bindingResult.rejectValue("language1", null, "Languages must not be equal.");
-            return createClusterPage(clusterDTO, model);
+            return createClusterPage(clusterDTO, model, principal);
         }
         catch (LanguageNotFoundException e)
         {
             bindingResult.rejectValue("language" + e.getLanguageNumber(), null,
                     "The language is not found.");
-            return createClusterPage(clusterDTO, model);
+            return createClusterPage(clusterDTO, model, principal);
         }
         catch (ClusterAlreadyExistsException e)
         {
             bindingResult.reject(null, "Cluster with such language pair already exists.");
-            return createClusterPage(clusterDTO, model);
+            return createClusterPage(clusterDTO, model, principal);
         }
 
         return new ModelAndView("redirect:viewCluster/" + clusterId + "?created=true");
@@ -114,9 +114,10 @@ public class ClusterController
                     produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Map<String, Object> checkClusterExistence(@RequestParam("lang1") String lang1,
-                                                     @RequestParam("lang2") String lang2)
+                                                     @RequestParam("lang2") String lang2,
+                                                     Principal principal)
     {
-        boolean exists = clusterService.checkClusterExistence(lang1, lang2);
+        boolean exists = clusterService.checkClusterExistence(lang1, lang2, principal.getName());
         Map<String, Object> map = new HashMap<>();
         map.put("exists", exists);
         return map;

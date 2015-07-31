@@ -17,5 +17,8 @@ public interface AppUserService
     Long addNewUser(UserDTO userDTO)
             throws NicknameAlreadyExistsException, EmailAlreadyExistsException;
 
-    AppUser getUserByNickname(String name);
+    /**
+     * Returns user by his nickname
+     */
+    AppUser getUserByNickname(String nickname);
 }

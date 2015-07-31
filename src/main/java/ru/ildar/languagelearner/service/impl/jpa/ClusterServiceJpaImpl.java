@@ -31,7 +31,7 @@ public class ClusterServiceJpaImpl implements ClusterService
     private AppUserService appUserService;
 
     @Override
-    public long addCluster(ClusterDTO clusterDTO, String name) throws LanguagesAreEqualException,
+    public long addCluster(ClusterDTO clusterDTO, String nickname) throws LanguagesAreEqualException,
             LanguageNotFoundException, ClusterAlreadyExistsException
     {
         if(clusterDTO.getLanguage1().equals(clusterDTO.getLanguage2()))
@@ -51,13 +51,12 @@ public class ClusterServiceJpaImpl implements ClusterService
             throw new LanguageNotFoundException(2);
         }
 
-        if(clusterRepository.findByLanguage1AndLanguage2(l1, l2) != null
-                || clusterRepository.findByLanguage1AndLanguage2(l2, l1) != null)
+        if(clusterRepository.findByLanguagesAndUserNickname(l1, l2, nickname) != null)
         {
             throw new ClusterAlreadyExistsException();
         }
 
-        AppUser appUser = appUserService.getUserByNickname(name);
+        AppUser appUser = appUserService.getUserByNickname(nickname);
         Cluster cluster = new Cluster();
         cluster.setAppUser(appUser);
         cluster.setLanguage1(l1);
@@ -82,18 +81,17 @@ public class ClusterServiceJpaImpl implements ClusterService
 
     @Override
     @Transactional(readOnly = true)
-    public boolean checkClusterExistence(String lang1, String lang2)
+    public boolean checkClusterExistence(String lang1, String lang2, String userNickname)
     {
         Language l1 = languageRepository.findByDefaultName(lang1);
         Language l2 = languageRepository.findByDefaultName(lang2);
 
-        return clusterRepository.findByLanguage1AndLanguage2(l1, l2) != null
-                || clusterRepository.findByLanguage1AndLanguage2(l2, l1) != null;
+        return clusterRepository.findByLanguagesAndUserNickname(l1, l2, userNickname) != null;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public LanguagePairDTO getNonExistentLanguagePair()
+    public LanguagePairDTO getNonExistentLanguagePair(String userNickname)
     {
         List<LanguagePairDTO> lst = languageRepository.findNonExistentLanguagePair();
         return lst.size() != 0 ? lst.get(0) : null;

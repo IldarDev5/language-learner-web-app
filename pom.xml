@@ -20,6 +20,7 @@
       <postgresql.version>9.2-1003-jdbc4</postgresql.version>
       <jstl.version>1.2</jstl.version>
       <jwebunit.version>3.1</jwebunit.version>
+      <spring-security.version>4.0.2.RELEASE</spring-security.version>
 
       <spring.datasource.url>jdbc:postgresql://OPENSHIFT_POSTGRESQL_DB_HOST:OPENSHIFT_POSTGRESQL_DB_PORT/OPENSHIFT_APP_NAME</spring.datasource.url>
       <spring.datasource.username>OPENSHIFT_POSTGRESQL_DB_USERNAME</spring.datasource.username>
@@ -159,6 +160,11 @@
             <artifactId>el-impl</artifactId>
             <version>2.2</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>${spring-security.version}</version>
         </dependency>
 
     </dependencies>

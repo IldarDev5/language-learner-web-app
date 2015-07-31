@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.ildar.languagelearner.config.WebConfig;
 import ru.ildar.languagelearner.service.AppUserService;
+import ru.ildar.languagelearner.service.ClusterService;
+import ru.ildar.languagelearner.service.LanguageService;
+import ru.ildar.languagelearner.service.LessonService;
 
 import static org.mockito.Mockito.mock;
 
@@ -30,5 +33,23 @@ public class TestConfig
     public UserDetailsService userDetailsService()
     {
         return mock(UserDetailsService.class);
+    }
+
+    @Bean
+    public ClusterService clusterService()
+    {
+        return mock(ClusterService.class);
+    }
+
+    @Bean
+    public LanguageService languageService()
+    {
+        return mock(LanguageService.class);
+    }
+
+    @Bean
+    public LessonService lessonService()
+    {
+        return mock(LessonService.class);
     }
 }
