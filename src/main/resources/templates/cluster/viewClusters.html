@@ -16,7 +16,7 @@
             <!--@thymesVar id="clusters" type="java.util.List<ru.ildar.languagelearner.database.domain.Cluster>"-->
             <tr th:each="cls : ${clusters}" th:object="${cls}">
                 <td th:text="*{language1.defaultName}">English</td>
-                <th th:text="*{language2.defaultName}">Russian</th>
+                <td th:text="*{language2.defaultName}">Russian</td>
                 <td><a th:href="@{/cluster/viewCluster/__*{clusterId}__}">View info</a></td>
                 <td><a th:href="@{/lessons/viewLessons(clusterId=${cls.clusterId})}">
                     View lessons</a></td>

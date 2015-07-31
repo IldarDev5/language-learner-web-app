@@ -2,7 +2,9 @@ package ru.ildar.languagelearner.service.impl.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.ildar.languagelearner.controller.dto.ClusterDTO;
+import ru.ildar.languagelearner.controller.dto.LanguagePairDTO;
 import ru.ildar.languagelearner.database.dao.ClusterRepository;
 import ru.ildar.languagelearner.database.dao.LanguageRepository;
 import ru.ildar.languagelearner.database.domain.AppUser;
@@ -14,7 +16,6 @@ import ru.ildar.languagelearner.exception.LanguagesAreEqualException;
 import ru.ildar.languagelearner.service.AppUserService;
 import ru.ildar.languagelearner.service.ClusterService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -66,18 +67,21 @@ public class ClusterServiceJpaImpl implements ClusterService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Cluster> getClustersOfUser(String nickname)
     {
         return clusterRepository.findByAppUser_Nickname(nickname);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Cluster getClusterById(Long id)
     {
         return clusterRepository.findOne(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean checkClusterExistence(String lang1, String lang2)
     {
         Language l1 = languageRepository.findByDefaultName(lang1);
@@ -85,5 +89,13 @@ public class ClusterServiceJpaImpl implements ClusterService
 
         return clusterRepository.findByLanguage1AndLanguage2(l1, l2) != null
                 || clusterRepository.findByLanguage1AndLanguage2(l2, l1) != null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public LanguagePairDTO getNonExistentLanguagePair()
+    {
+        List<LanguagePairDTO> lst = languageRepository.findNonExistentLanguagePair();
+        return lst.size() != 0 ? lst.get(0) : null;
     }
 }

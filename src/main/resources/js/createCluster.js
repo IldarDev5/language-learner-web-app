@@ -10,7 +10,11 @@ $(function() {
 
     var allowSubmitting = true;
 
-    lang2.children(":nth-child(2)").prop('selected', true);
+    //Setting languages to <select>s
+    lang1.children("option[value='" + lang1Select + "']").prop('selected', true);
+    lang2.children("option[value='" + lang2Select + "']").prop('selected', true);
+    addAndDeleteOption(lang2, 0, lang1Select);
+    addAndDeleteOption(lang1, 1, lang2Select);
 
     //TODO: Make 'reverse' button to reverse languages selection
     /**
@@ -60,4 +64,11 @@ $(function() {
             }
         )
     }
+
+    $("#createForm").submit(function(){
+        if(!allowSubmitting) {
+            alert("Can't submit, there are errors in your form.");
+            return false;
+        }
+    });
 });

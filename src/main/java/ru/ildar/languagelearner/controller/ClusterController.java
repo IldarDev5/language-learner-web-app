@@ -37,6 +37,11 @@ public class ClusterController
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public ModelAndView createClusterPage(ClusterDTO clusterDTO, ModelMap model)
     {
+        /* Adding a pair of two languages to view in <select>s
+          the cluster for which doesn't exist. This helps to
+          get rid of a bug when a pair of languages is visualized
+          for which there is already existing cluster. */
+        model.addAttribute("langPair", clusterService.getNonExistentLanguagePair());
         model.addAttribute("languages", languageService.getLanguagesAsStrings());
         return new ModelAndView("cluster/create", "cluster", clusterDTO);
     }

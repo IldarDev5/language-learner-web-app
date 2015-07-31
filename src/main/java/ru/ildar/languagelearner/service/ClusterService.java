@@ -1,6 +1,7 @@
 package ru.ildar.languagelearner.service;
 
 import ru.ildar.languagelearner.controller.dto.ClusterDTO;
+import ru.ildar.languagelearner.controller.dto.LanguagePairDTO;
 import ru.ildar.languagelearner.database.domain.Cluster;
 import ru.ildar.languagelearner.exception.ClusterAlreadyExistsException;
 import ru.ildar.languagelearner.exception.LanguageNotFoundException;
@@ -18,4 +19,11 @@ public interface ClusterService
     Cluster getClusterById(Long id);
 
     boolean checkClusterExistence(String lang1, String lang2);
+
+    /**
+     * Returns a pair of two arbitrary languages for which
+     * the cluster doesn't exist.
+     * @return Such pair, if it exists; otherwise <code>null</code>
+     */
+    LanguagePairDTO getNonExistentLanguagePair();
 }

@@ -27,4 +27,23 @@ public class Language
     {
         this.defaultName = defaultName;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Language language = (Language) o;
+
+        if (!defaultName.equals(language.defaultName)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return defaultName.hashCode();
+    }
 }

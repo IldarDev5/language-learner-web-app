@@ -5,16 +5,21 @@
 </head>
 <body>
     <div tiles:fragment="content">
+        <script type="text/javascript">
+            var lang1Select = "<th:block th:text="${langPair.language1}"></th:block>";
+            var lang2Select = "<th:block th:text="${langPair.language2}"></th:block>";
+        </script>
         <script type="text/javascript" src="/scripts/createCluster.js"></script>
 
         <h2>Create cluster</h2>
         <span style="color: red;" id="submitErr"></span>
-        <form method="post" th:action="@{/cluster/create}" th:object="${cluster}">
+        <form method="post" th:action="@{/cluster/create}" th:object="${cluster}" id="createForm">
             <fieldset>
                 <legend>Choose cluster languages</legend>
                 <span style="color: red;" th:if="${#fields.hasErrors('*')}" th:errors="*" ></span>
                 <table>
 
+                    <!--@thymesVar id="langPair" type="ru.ildar.languagelearner.controller.dto.LanguagePairDTO"-->
                     <tr>
                         <td><label th:for="language1">Select first language:</label></td>
                         <td>
