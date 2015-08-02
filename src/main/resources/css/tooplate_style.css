@@ -533,3 +533,24 @@ em { color: #000; }
 }
 
 /* end of footer */
+
+.post-footer {
+    background-color: #FAFAFA;
+    padding: 5px; margin: 20px 10px 0 10px;
+    border: 1px solid #f2f2f2;
+    font-size: 95%;
+}
+.post-footer .date {
+    background: url(/images/clock.gif) no-repeat left center;
+    padding-left: 20px; margin: 0 10px 0 5px;
+}
+.post-footer .comments {
+    background: url(/images/comment.gif) no-repeat left center;
+    padding-left: 20px; margin: 0 10px 0 5px;
+}
+.post-footer .readmore {
+    background: url(/images/page.gif) no-repeat left center;
+    padding-left: 20px; margin: 0 10px 0 5px;
+}
+
+.align-right { text-align: right; }

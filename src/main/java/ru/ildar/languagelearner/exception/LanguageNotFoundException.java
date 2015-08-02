@@ -1,6 +1,6 @@
 package ru.ildar.languagelearner.exception;
 
-public class LanguageNotFoundException extends Throwable
+public class LanguageNotFoundException extends Exception
 {
     private int languageNumber;
 

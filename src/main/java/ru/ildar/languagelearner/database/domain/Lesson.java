@@ -1,5 +1,7 @@
 package ru.ildar.languagelearner.database.domain;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -33,6 +35,8 @@ public class Lesson
     @Column(nullable = false)
     private double averageGrade = 0.0;
 
+    @Formula("(select count(*) from translation t where t.lesson_id = lesson_id)")
+    private int translationsCount;
 
     public Long getLessonId()
     {
@@ -92,5 +96,15 @@ public class Lesson
     public void setAverageGrade(double averageGrade)
     {
         this.averageGrade = averageGrade;
+    }
+
+    public int getTranslationsCount()
+    {
+        return translationsCount;
+    }
+
+    public void setTranslationsCount(int translationsCount)
+    {
+        this.translationsCount = translationsCount;
     }
 }

@@ -2,6 +2,7 @@ package ru.ildar.languagelearner.service;
 
 import ru.ildar.languagelearner.database.domain.Cluster;
 import ru.ildar.languagelearner.database.domain.Lesson;
+import ru.ildar.languagelearner.exception.*;
 
 import java.util.List;
 
@@ -9,4 +10,26 @@ public interface LessonService
 {
     /** Returns all lessons of this cluster */
     List<Lesson> getLessons(Cluster cluster);
+
+    /**
+     * Get lessons of the specified cluster using pagination
+     * @param cluster Cluster lessons of which to get
+     * @param page 1-based page number
+     */
+    List<Lesson> getLessonsForPage(Cluster cluster, int page);
+
+    /** Returns total cound of pages containing lessons,
+     * number of lessons per page is set in service implementation */
+    int totalLessonPages();
+
+    /**
+     * Deletes the lesson. If the lesson is not found, does nothing.
+     * @param lesson the lesson to delete
+     * @param nickname Nickname of the user who performs the operation
+     * @throws LessonNotOfThisUserException If the user specified by this nickname
+     * is not the owner of this lesson
+     */
+    void deleteLesson(Lesson lesson, String nickname);
+
+    Lesson getLessonById(long lessonId);
 }
