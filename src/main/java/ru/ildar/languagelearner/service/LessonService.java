@@ -1,5 +1,6 @@
 package ru.ildar.languagelearner.service;
 
+import ru.ildar.languagelearner.controller.dto.LessonDTO;
 import ru.ildar.languagelearner.database.domain.Cluster;
 import ru.ildar.languagelearner.database.domain.Lesson;
 import ru.ildar.languagelearner.exception.*;
@@ -31,5 +32,17 @@ public interface LessonService
      */
     void deleteLesson(Lesson lesson, String nickname);
 
+    /**
+     * Returns the lesson specified by this ID
+     * @param lessonId ID of the lesson to find
+     */
     Lesson getLessonById(long lessonId);
+
+    /**
+     * Creates new lesson as part of this cluster
+     * @param cluster Cluster which owns the new lesson
+     * @param lessonDTO DTO object containing lesson data
+     * @return Newly created Lesson object from this DTO
+     */
+    Lesson addLesson(Cluster cluster, LessonDTO lessonDTO);
 }

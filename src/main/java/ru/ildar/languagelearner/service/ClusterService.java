@@ -3,9 +3,7 @@ package ru.ildar.languagelearner.service;
 import ru.ildar.languagelearner.controller.dto.ClusterDTO;
 import ru.ildar.languagelearner.controller.dto.LanguagePairDTO;
 import ru.ildar.languagelearner.database.domain.Cluster;
-import ru.ildar.languagelearner.exception.ClusterAlreadyExistsException;
-import ru.ildar.languagelearner.exception.LanguageNotFoundException;
-import ru.ildar.languagelearner.exception.LanguagesAreEqualException;
+import ru.ildar.languagelearner.exception.*;
 
 import java.util.List;
 
@@ -46,4 +44,13 @@ public interface ClusterService
      * @return Such pair, if it exists; otherwise <code>null</code>
      */
     LanguagePairDTO getNonExistentLanguagePair(String userNickname);
+
+    /**
+     * Checks if the cluster specified by this ID is owner by the user specified by this nickname
+     * @param clusterId ID of the cluster
+     * @param nickname Nickname of the user
+     * @throws ClusterNotOfThisUserException If the cluster is non-existent or not of this user
+     * @return Cluster specified by this name if the exception has not been thrown
+     */
+    Cluster checkClusterOwner(long clusterId, String nickname);
 }

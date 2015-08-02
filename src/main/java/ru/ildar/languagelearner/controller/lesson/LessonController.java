@@ -1,4 +1,4 @@
-package ru.ildar.languagelearner.controller;
+package ru.ildar.languagelearner.controller.lesson;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ru.ildar.languagelearner.controller.dto.LessonDTO;
 import ru.ildar.languagelearner.database.domain.Cluster;
 import ru.ildar.languagelearner.database.domain.Lesson;
 import ru.ildar.languagelearner.service.ClusterService;
@@ -37,12 +38,12 @@ public class LessonController
                                     ModelMap model)
     {
         int pagesCount = lessonService.totalLessonPages();
-        if(pagesCount == 0)
+        if (pagesCount == 0)
         {
             pagesCount = 1;
         }
 
-        if(page > pagesCount)
+        if (page > pagesCount)
         {
             page = pagesCount;
         }

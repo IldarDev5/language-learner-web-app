@@ -90,17 +90,12 @@ public class ClusterController
     }
 
     @RequestMapping(value = "viewCluster/{id}", method = RequestMethod.GET)
-    public ModelAndView viewCluster(@PathVariable("id") Long id,
+    public ModelAndView viewCluster(@PathVariable("id") Long clusterId,
                                     @RequestParam(value = "created", required = false) Boolean created,
                                     ModelMap model,
                                     Principal principal)
     {
-        Cluster cluster = clusterService.getClusterById(id);
-        if(cluster == null || !cluster.getAppUser().getNickname().equals(principal.getName()))
-            //User tries to access non-existent or not his cluster
-        {
-            throw new ClusterNotOfThisUserException();
-        }
+        Cluster cluster = clusterService.checkClusterOwner(clusterId, principal.getName());
 
         if(created != null && created)
         {

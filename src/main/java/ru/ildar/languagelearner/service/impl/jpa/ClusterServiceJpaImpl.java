@@ -11,6 +11,7 @@ import ru.ildar.languagelearner.database.domain.AppUser;
 import ru.ildar.languagelearner.database.domain.Cluster;
 import ru.ildar.languagelearner.database.domain.Language;
 import ru.ildar.languagelearner.exception.ClusterAlreadyExistsException;
+import ru.ildar.languagelearner.exception.ClusterNotOfThisUserException;
 import ru.ildar.languagelearner.exception.LanguageNotFoundException;
 import ru.ildar.languagelearner.exception.LanguagesAreEqualException;
 import ru.ildar.languagelearner.service.AppUserService;
@@ -95,5 +96,17 @@ public class ClusterServiceJpaImpl implements ClusterService
     {
         List<LanguagePairDTO> lst = languageRepository.findNonExistentLanguagePair();
         return lst.size() != 0 ? lst.get(0) : null;
+    }
+
+    @Override
+    public Cluster checkClusterOwner(long clusterId, String nickname)
+    {
+        Cluster cluster = clusterRepository.findOne(clusterId);
+        if(cluster == null || !cluster.getAppUser().getNickname().equals(nickname))
+        {
+            throw new ClusterNotOfThisUserException();
+        }
+
+        return cluster;
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
+import ru.ildar.languagelearner.controller.dto.LessonDTO;
 import ru.ildar.languagelearner.database.dao.LessonRepository;
 import ru.ildar.languagelearner.database.domain.Cluster;
 import ru.ildar.languagelearner.database.domain.Lesson;
@@ -66,5 +67,16 @@ public class LessonServiceJpaImpl implements LessonService
     public Lesson getLessonById(long lessonId)
     {
         return lessonRepository.findOne(lessonId);
+    }
+
+    @Override
+    public Lesson addLesson(Cluster cluster, LessonDTO lessonDTO)
+    {
+        Lesson lesson = new Lesson();
+        lesson.setCluster(cluster);
+        lesson.setLessonName(lessonDTO.getLessonName());
+        lesson.setDescription(lessonDTO.getDescription());
+
+        return lessonRepository.save(lesson);
     }
 }

@@ -33,10 +33,17 @@ public class Lesson
 
     /** Average grade received by the user on all trainings involving this lesson */
     @Column(nullable = false)
-    private double averageGrade = 0.0;
+    private double averageGrade;
 
     @Formula("(select count(*) from translation t where t.lesson_id = lesson_id)")
     private int translationsCount;
+
+    @PrePersist
+    public void prePersist()
+    {
+        addDate = new Date();
+        averageGrade = 0.0;
+    }
 
     public Long getLessonId()
     {
@@ -101,10 +108,5 @@ public class Lesson
     public int getTranslationsCount()
     {
         return translationsCount;
-    }
-
-    public void setTranslationsCount(int translationsCount)
-    {
-        this.translationsCount = translationsCount;
     }
 }
