@@ -23,16 +23,21 @@ import java.util.List;
 @Transactional
 public class ClusterServiceJpaImpl implements ClusterService
 {
-    @Autowired
     private ClusterRepository clusterRepository;
-    @Autowired
     private LanguageRepository languageRepository;
-
-    @Autowired
     private AppUserService appUserService;
 
+    @Autowired
+    public ClusterServiceJpaImpl(AppUserService appUserService, LanguageRepository languageRepository,
+                                 ClusterRepository clusterRepository)
+    {
+        this.appUserService = appUserService;
+        this.languageRepository = languageRepository;
+        this.clusterRepository = clusterRepository;
+    }
+
     @Override
-    public long addCluster(ClusterDTO clusterDTO, String nickname) throws LanguagesAreEqualException,
+    public Long addCluster(ClusterDTO clusterDTO, String nickname) throws LanguagesAreEqualException,
             LanguageNotFoundException, ClusterAlreadyExistsException
     {
         if(clusterDTO.getLanguage1().equals(clusterDTO.getLanguage2()))
@@ -99,6 +104,7 @@ public class ClusterServiceJpaImpl implements ClusterService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Cluster checkClusterOwner(long clusterId, String nickname)
     {
         Cluster cluster = clusterRepository.findOne(clusterId);

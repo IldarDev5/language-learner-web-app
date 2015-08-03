@@ -8,10 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.ildar.languagelearner.config.WebConfig;
-import ru.ildar.languagelearner.service.AppUserService;
-import ru.ildar.languagelearner.service.ClusterService;
-import ru.ildar.languagelearner.service.LanguageService;
-import ru.ildar.languagelearner.service.LessonService;
+import ru.ildar.languagelearner.service.*;
 
 import static org.mockito.Mockito.mock;
 
@@ -52,4 +49,7 @@ public class TestConfig
     {
         return mock(LessonService.class);
     }
+
+    @Bean
+    public TranslationService translationService() { return mock(TranslationService.class); }
 }

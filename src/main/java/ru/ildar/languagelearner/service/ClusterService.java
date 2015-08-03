@@ -19,7 +19,7 @@ public interface ClusterService
      * is not found in the database
      * @throws ClusterAlreadyExistsException If there's already a cluster with such language pair
      */
-    long addCluster(ClusterDTO clusterDTO, String nickname) throws LanguagesAreEqualException,
+    Long addCluster(ClusterDTO clusterDTO, String nickname) throws LanguagesAreEqualException,
             LanguageNotFoundException, ClusterAlreadyExistsException;
 
     /** Returns all clusters of the user specified by this nickname */

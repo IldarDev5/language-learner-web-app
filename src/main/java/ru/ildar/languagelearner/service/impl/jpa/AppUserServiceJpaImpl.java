@@ -23,17 +23,24 @@ import java.util.Arrays;
 @Transactional
 public class AppUserServiceJpaImpl implements UserDetailsService, AppUserService
 {
-    @Autowired
     private AppUserRepository appUserRepository;
 
     private MessageDigestPasswordEncoder encoder = new Md5PasswordEncoder();
+
+    @Autowired
+    public AppUserServiceJpaImpl(AppUserRepository appUserRepository)
+    {
+        this.appUserRepository = appUserRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
         AppUser appUser = appUserRepository.findByNickname(username);
         if(appUser == null)
+        {
             throw new UsernameNotFoundException("User not found.");
+        }
 
         return new User(username, appUser.getPassword(),
                 Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));

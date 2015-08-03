@@ -12,6 +12,7 @@ import ru.ildar.languagelearner.exception.NicknameAlreadyExistsException;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -42,17 +43,14 @@ public class RegistrationControllerTest extends BaseControllerTest
                 .param("password", password)
                 .param("repeatPassword", repeatPassword)
                 .param("email", email)
+                .with(csrf())
+
         )
                 .andExpect(status().isOk())
                 .andExpect(view().name("auth/registration"))
                 .andExpect(model().attributeHasFieldErrors("user", "nickname",
                         "password", "repeatPassword", "email"))
-                .andExpect(model().attribute("user", allOf(
-                        hasProperty("nickname", is(nickname)),
-                        hasProperty("password", is(password)),
-                        hasProperty("repeatPassword", is(repeatPassword)),
-                        hasProperty("email", is(email))
-                )));
+                .andExpect(model().attribute("user", allOf(hasProperty("nickname", is(nickname)), hasProperty("password", is(password)), hasProperty("repeatPassword", is(repeatPassword)), hasProperty("email", is(email)))));
 
         verifyZeroInteractions(appUserServiceMock, userDetailsServiceMock);
     }
@@ -71,6 +69,7 @@ public class RegistrationControllerTest extends BaseControllerTest
                         .param("password", password)
                         .param("repeatPassword", repeatPassword)
                         .param("email", email)
+                        .with(csrf())
         )
                 .andExpect(status().isOk())
                 .andExpect(view().name("auth/registration"))
@@ -102,6 +101,7 @@ public class RegistrationControllerTest extends BaseControllerTest
                         .param("password", password)
                         .param("repeatPassword", repeatPassword)
                         .param("email", email)
+                        .with(csrf())
         )
                 .andExpect(status().isOk())
                 .andExpect(view().name("auth/registration"))
@@ -134,6 +134,7 @@ public class RegistrationControllerTest extends BaseControllerTest
                         .param("password", password)
                         .param("repeatPassword", repeatPassword)
                         .param("email", email)
+                        .with(csrf())
         )
                 .andExpect(status().isOk())
                 .andExpect(view().name("auth/registration"))
@@ -163,6 +164,7 @@ public class RegistrationControllerTest extends BaseControllerTest
                         .param("password", password)
                         .param("repeatPassword", repeatPassword)
                         .param("email", email)
+                        .with(csrf())
         )
                 .andExpect(status().isFound())
                 .andExpect(redirectedUrl("/auth/login?isRegistered=true"));
