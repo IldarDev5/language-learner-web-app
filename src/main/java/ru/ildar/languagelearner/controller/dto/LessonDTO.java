@@ -1,5 +1,6 @@
 package ru.ildar.languagelearner.controller.dto;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -16,7 +17,8 @@ public class LessonDTO
     @NotNull
     @Min(1)
     private Long clusterId;
-    @NotNull
+
+    @Valid
     private List<TranslationDTO> translations = new ArrayList<>();
 
     public String getLessonName()
