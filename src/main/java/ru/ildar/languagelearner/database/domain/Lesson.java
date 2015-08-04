@@ -4,6 +4,7 @@ import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /** Lesson in a cluster - contains pairs "sentence-translation" in cluster defined languages. */
 @Entity
@@ -34,6 +35,9 @@ public class Lesson
     /** Average grade received by the user on all trainings involving this lesson */
     @Column(nullable = false)
     private double averageGrade;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lesson")
+    private List<Translation> translations;
 
     @Formula("(select count(*) from translation t where t.lesson_id = lesson_id)")
     private int translationsCount;
@@ -103,6 +107,16 @@ public class Lesson
     public void setAverageGrade(double averageGrade)
     {
         this.averageGrade = averageGrade;
+    }
+
+    public List<Translation> getTranslations()
+    {
+        return translations;
+    }
+
+    public void setTranslations(List<Translation> translations)
+    {
+        this.translations = translations;
     }
 
     public int getTranslationsCount()

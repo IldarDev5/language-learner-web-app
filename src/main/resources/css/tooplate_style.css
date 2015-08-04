@@ -552,5 +552,9 @@ em { color: #000; }
     background: url(/images/page.gif) no-repeat left center;
     padding-left: 20px; margin: 0 10px 0 5px;
 }
+.post-footer .delete {
+    background: url(/images/delete.png) no-repeat left center;
+    padding-left: 20px; margin: 0 10px 0 5px;
+}
 
 .align-right { text-align: right; }

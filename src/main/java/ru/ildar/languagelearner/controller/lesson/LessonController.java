@@ -57,17 +57,10 @@ public class LessonController
     }
 
     @RequestMapping(value = "removeLesson", method = RequestMethod.POST)
-    public String removeLesson(@RequestParam("lessonId") long lessonId,
+    public String removeLesson(@RequestParam("lessonId") Lesson lesson,
                                @RequestParam("page") int page,
                                Principal principal)
     {
-        Lesson lesson = lessonService.getLessonById(lessonId);
-        if(lesson == null)
-            //No lesson found
-        {
-            return "redirect:/";
-        }
-
         lessonService.deleteLesson(lesson, principal.getName());
         return "redirect:viewLessonsPage?page=" + page + "&clusterId=" + lesson.getCluster().getClusterId();
     }
