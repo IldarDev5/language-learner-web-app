@@ -15,8 +15,10 @@ public interface LanguageRepository extends CrudRepository<Language, String>
     Language findByDefaultName(String language);
 
     @Query("select new ru.ildar.languagelearner.controller.dto" +
-            ".LanguagePairDTO(l1.defaultName, l2.defaultName) from Language l1, Language l2 " +
-            "where l1 <> l2 and not exists(select cl from Cluster cl where cl.language1 = l1 and " +
-            "cl.language2 = l2 or cl.language1 = l2 and cl.language2 = l1)")
-    List<LanguagePairDTO> findNonExistentLanguagePair();
+            ".LanguagePairDTO(l1.defaultName, l2.defaultName) " +
+            "from Language l1, Language l2 " +
+            "where l1 <> l2 and not exists " +
+            "       (select cl from Cluster cl where cl.appUser.nickname = ?1 and" +
+            "       (cl.language1 = l1 and cl.language2 = l2 or cl.language1 = l2 and cl.language2 = l1))")
+    List<LanguagePairDTO> findNonExistentLanguagePair(String nickname);
 }

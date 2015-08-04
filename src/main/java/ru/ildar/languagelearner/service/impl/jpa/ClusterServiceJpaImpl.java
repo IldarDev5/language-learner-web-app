@@ -88,9 +88,19 @@ public class ClusterServiceJpaImpl implements ClusterService
     @Override
     @Transactional(readOnly = true)
     public boolean checkClusterExistence(String lang1, String lang2, String userNickname)
+            throws LanguageNotFoundException
     {
         Language l1 = languageRepository.findByDefaultName(lang1);
         Language l2 = languageRepository.findByDefaultName(lang2);
+
+        if(l1 == null)
+        {
+            throw new LanguageNotFoundException(1);
+        }
+        if(l2 == null)
+        {
+            throw new LanguageNotFoundException(2);
+        }
 
         return clusterRepository.findByLanguagesAndUserNickname(l1, l2, userNickname) != null;
     }
@@ -99,7 +109,7 @@ public class ClusterServiceJpaImpl implements ClusterService
     @Transactional(readOnly = true)
     public LanguagePairDTO getNonExistentLanguagePair(String userNickname)
     {
-        List<LanguagePairDTO> lst = languageRepository.findNonExistentLanguagePair();
+        List<LanguagePairDTO> lst = languageRepository.findNonExistentLanguagePair(userNickname);
         return lst.size() != 0 ? lst.get(0) : null;
     }
 

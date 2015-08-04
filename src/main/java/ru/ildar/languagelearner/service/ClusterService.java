@@ -34,8 +34,10 @@ public interface ClusterService
      * @param lang2 Language 2
      * @param userNickname Nickname of the user whose cluster list needs to be checked
      * @return true, if it exists; otherwise false
+     * @throws LanguageNotFoundException If one of the languages was not found in the DB
      */
-    boolean checkClusterExistence(String lang1, String lang2, String userNickname);
+    boolean checkClusterExistence(String lang1, String lang2, String userNickname)
+                        throws LanguageNotFoundException;
 
     /**
      * Returns a pair of two arbitrary languages for which

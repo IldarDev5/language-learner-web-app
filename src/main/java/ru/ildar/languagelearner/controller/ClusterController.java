@@ -112,9 +112,17 @@ public class ClusterController
                                                      @RequestParam("lang2") String lang2,
                                                      Principal principal)
     {
-        boolean exists = clusterService.checkClusterExistence(lang1, lang2, principal.getName());
         Map<String, Object> map = new HashMap<>();
-        map.put("exists", exists);
+        try
+        {
+            boolean exists = clusterService.checkClusterExistence(lang1, lang2, principal.getName());
+            map.put("exists", exists);
+        }
+        catch (LanguageNotFoundException e)
+        {
+            map.put("langNotFound", e.getLanguageNumber());
+        }
+
         return map;
     }
 }
