@@ -32,6 +32,7 @@ public class WebConfig extends WebMvcConfigurerAdapter
         AjaxThymeleafViewResolver viewResolver = new AjaxThymeleafViewResolver();
         viewResolver.setViewClass(FlowAjaxThymeleafTilesView.class);
         viewResolver.setTemplateEngine(springTemplateEngine);
+        viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
 
