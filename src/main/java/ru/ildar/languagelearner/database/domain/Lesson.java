@@ -32,9 +32,13 @@ public class Lesson
     @Temporal(TemporalType.TIMESTAMP)
     private Date addDate;
 
-    /** Average grade received by the user on all trainings involving this lesson */
+    /** How many times this lesson was taken as exercise */
     @Column(nullable = false)
-    private double averageGrade;
+    private long timesLessonTaken;
+
+    /** The sum of all grades received by this lesson exercises */
+    @Column(nullable = false)
+    private long sumGrade;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lesson")
     private List<Translation> translations;
@@ -46,7 +50,8 @@ public class Lesson
     public void prePersist()
     {
         addDate = new Date();
-        averageGrade = 0.0;
+        timesLessonTaken = 0;
+        sumGrade = 0;
     }
 
     public Long getLessonId()
@@ -99,16 +104,6 @@ public class Lesson
         this.addDate = addDate;
     }
 
-    public double getAverageGrade()
-    {
-        return averageGrade;
-    }
-
-    public void setAverageGrade(double averageGrade)
-    {
-        this.averageGrade = averageGrade;
-    }
-
     public List<Translation> getTranslations()
     {
         return translations;
@@ -122,5 +117,25 @@ public class Lesson
     public int getTranslationsCount()
     {
         return translationsCount;
+    }
+
+    public long getTimesLessonTaken()
+    {
+        return timesLessonTaken;
+    }
+
+    public void setTimesLessonTaken(long timesLessonTaken)
+    {
+        this.timesLessonTaken = timesLessonTaken;
+    }
+
+    public long getSumGrade()
+    {
+        return sumGrade;
+    }
+
+    public void setSumGrade(long sumGrade)
+    {
+        this.sumGrade = sumGrade;
     }
 }

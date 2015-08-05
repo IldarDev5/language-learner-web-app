@@ -45,4 +45,6 @@ public interface LessonService
      * @return Newly created Lesson object from this DTO
      */
     Lesson addLesson(Cluster cluster, LessonDTO lessonDTO);
+
+    void addTestGrade(long lessonId, int grade, String nickname);
 }

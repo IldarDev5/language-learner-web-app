@@ -1,5 +1,6 @@
 package ru.ildar.languagelearner.service;
 
+import ru.ildar.languagelearner.exercise.Exerciser;
 import ru.ildar.languagelearner.controller.dto.TranslationDTO;
 import ru.ildar.languagelearner.database.domain.Lesson;
 
@@ -15,4 +16,6 @@ public interface TranslationService
      * @param translations Translations to add
      */
     void addTranslations(Lesson lesson, List<TranslationDTO> translations);
+
+    public void fillExerciser(long lessonId, Exerciser exerciser, String nickname);
 }

@@ -79,4 +79,17 @@ public class LessonServiceJpaImpl implements LessonService
 
         return lessonRepository.save(lesson);
     }
+
+    @Override
+    public void addTestGrade(long lessonId, int grade, String nickname)
+    {
+        Lesson lesson = lessonRepository.findOne(lessonId);
+        if(!lesson.getCluster().getAppUser().getNickname().equals(nickname))
+        {
+            throw new LessonNotOfThisUserException();
+        }
+
+        lesson.setSumGrade(lesson.getSumGrade() + grade);
+        lesson.setTimesLessonTaken(lesson.getTimesLessonTaken() + 1);
+    }
 }
