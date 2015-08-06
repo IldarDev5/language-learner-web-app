@@ -17,5 +17,7 @@ public interface TranslationService
      */
     void addTranslations(Lesson lesson, List<TranslationDTO> translations);
 
-    public void fillExerciser(long lessonId, Exerciser exerciser, String nickname);
+    void fillExerciser(long lessonId, Exerciser exerciser, String nickname);
+
+    void setTranslationsCount(Exerciser exerciser, long lessonId);
 }

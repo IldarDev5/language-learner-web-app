@@ -37,6 +37,7 @@ public abstract class BaseServiceTest
                 lessonRepository, translationRepository, appUserServiceMock };
 
         appUserService = new AppUserServiceJpaImpl(appUserRepository);
-        clusterService = new ClusterServiceJpaImpl(appUserServiceMock, languageRepository, clusterRepository);
+        clusterService = new ClusterServiceJpaImpl(appUserServiceMock, languageRepository,
+                clusterRepository, lessonRepository);
     }
 }

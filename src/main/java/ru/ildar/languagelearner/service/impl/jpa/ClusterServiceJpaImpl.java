@@ -7,33 +7,35 @@ import ru.ildar.languagelearner.controller.dto.ClusterDTO;
 import ru.ildar.languagelearner.controller.dto.LanguagePairDTO;
 import ru.ildar.languagelearner.database.dao.ClusterRepository;
 import ru.ildar.languagelearner.database.dao.LanguageRepository;
+import ru.ildar.languagelearner.database.dao.LessonRepository;
 import ru.ildar.languagelearner.database.domain.AppUser;
 import ru.ildar.languagelearner.database.domain.Cluster;
 import ru.ildar.languagelearner.database.domain.Language;
-import ru.ildar.languagelearner.exception.ClusterAlreadyExistsException;
-import ru.ildar.languagelearner.exception.ClusterNotOfThisUserException;
-import ru.ildar.languagelearner.exception.LanguageNotFoundException;
-import ru.ildar.languagelearner.exception.LanguagesAreEqualException;
+import ru.ildar.languagelearner.database.domain.Lesson;
+import ru.ildar.languagelearner.exception.*;
+import ru.ildar.languagelearner.exercise.Exerciser;
 import ru.ildar.languagelearner.service.AppUserService;
 import ru.ildar.languagelearner.service.ClusterService;
 
 import java.util.List;
 
-@Service
+@Service("clusterService")
 @Transactional
 public class ClusterServiceJpaImpl implements ClusterService
 {
     private ClusterRepository clusterRepository;
     private LanguageRepository languageRepository;
     private AppUserService appUserService;
+    private LessonRepository lessonRepository;
 
     @Autowired
     public ClusterServiceJpaImpl(AppUserService appUserService, LanguageRepository languageRepository,
-                                 ClusterRepository clusterRepository)
+                                 ClusterRepository clusterRepository, LessonRepository lessonRepository)
     {
         this.appUserService = appUserService;
         this.languageRepository = languageRepository;
         this.clusterRepository = clusterRepository;
+        this.lessonRepository = lessonRepository;
     }
 
     @Override
@@ -124,5 +126,18 @@ public class ClusterServiceJpaImpl implements ClusterService
         }
 
         return cluster;
+    }
+
+    @Override
+    public void setClusterOfLesson(Exerciser exerciser, Long lessonId, String userNickname)
+    {
+        Lesson lesson = lessonRepository.findOne(lessonId);
+        Cluster cluster = lesson.getCluster();
+        if(!cluster.getAppUser().getNickname().equals(userNickname))
+        {
+            throw new LessonNotOfThisUserException();
+        }
+
+        exerciser.setLessonCluster(cluster);
     }
 }

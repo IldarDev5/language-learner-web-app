@@ -3,12 +3,13 @@ package ru.ildar.languagelearner.database.domain;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /** Lesson in a cluster - contains pairs "sentence-translation" in cluster defined languages. */
 @Entity
-public class Lesson
+public class Lesson implements Serializable
 {
     /** Lesson's primary key */
     @Id

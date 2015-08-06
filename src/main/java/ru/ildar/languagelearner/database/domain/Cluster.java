@@ -1,6 +1,7 @@
 package ru.ildar.languagelearner.database.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /** A list of lessons of a single user, bound by the sentences languages.
@@ -9,7 +10,7 @@ import java.util.Date;
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"language1_name", "language2_name", "user_id"})
 })
-public class Cluster
+public class Cluster implements Serializable
 {
     /** Entity's primary key */
     @Id

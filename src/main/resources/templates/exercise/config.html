@@ -1,0 +1,37 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title tiles:fragment="title">Test configuration</title>
+</head>
+<body>
+    <div tiles:fragment="content">
+        <script type="text/javascript">
+            var translationsCount = "<th:block th:text='${exerciser.translationsCount}'></th:block>";
+        </script>
+        <script type="text/javascript" src="/scripts/exerciseConfig.js"></script>
+        <h2>Test configuration</h2>
+        <!--@thymesVar id="configDTO" type="ru.ildar.languagelearner.controller.dto.ExerciseConfigDTO"-->
+        <!--@thymesVar id="flowExecutionUrl" type="java.lang.String"-->
+        <form method="post" th:action="${flowExecutionUrl}" th:object="${configDTO}">
+            <fieldset>
+                <legend>Choose options for the exercise</legend>
+
+                <label th:for="countOfQuestions">Count of questions in the test:</label>
+                <input type="text" th:field="*{countOfQuestions}" /><br />
+
+                <input type="checkbox" th:field="*{uniqueQuestions}" />
+                <span>Allow only unique questions in the test</span><br />
+
+                <input type="checkbox" th:field="*{invertLanguages}" />
+                <!--@thymesVar id="exerciser" type="ru.ildar.languagelearner.exercise.Exerciser"-->
+                <span th:text="|Make primary language
+                ${exerciser.lessonCluster.language2.defaultName} instead of
+                ${exerciser.lessonCluster.language1.defaultName}|"></span>
+
+            </fieldset>
+            <input type="submit" name="_eventId_submitConfig" value="Submit" />
+            <input type="submit" name="_eventId_cancel" value="Cancel" />
+        </form>
+    </div>
+</body>
+</html>

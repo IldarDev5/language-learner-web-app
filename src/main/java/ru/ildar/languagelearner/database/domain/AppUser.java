@@ -1,11 +1,12 @@
 package ru.ildar.languagelearner.database.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Entity that stores credentials and other information about application user */
 @Entity
-public class AppUser
+public class AppUser implements Serializable
 {
     /** User's primary key */
     @Id

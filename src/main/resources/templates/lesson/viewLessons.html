@@ -19,11 +19,16 @@
             <h3 th:text="*{lessonName}">Lesson 1</h3>
             <p th:text="*{description}">Full description</p>
             <p class="post-footer align-right">
+
                 <span th:text="|*{translationsCount} pair(s) of sentences|">25 pairs of sentences</span>
+
                 <a th:href="'javascript:deleteLesson(\'' + *{lessonId} + '\',\'' + ${param.page[0]} + '\');'"
                    class="delete">Delete</a>
+
                 <a th:href="@{/lessons/edit(lessonId=*{lessonId})}" class="readmore">Edit lesson</a>
-                <a th:href="@{/lessons/take(lessonId=*{lessonId})}">Take lesson</a>
+
+                <a th:href="@{/doExercise(lessonId=*{lessonId})}">Take lesson</a>
+
                 <span class="date" th:text="*{#dates.format(addDate, 'dd/MM/yyyy hh:mm')}">
                     13/10/2015 10:00
                 </span>
@@ -35,8 +40,10 @@
         <th:block th:each="pg : ${#numbers.sequence(1, pagesCount)}">
             <th:block th:switch="${pg}">
                 <b th:case="${param.page[0]}" th:text="${pg}">1</b>
+
                 <a th:case="*" th:text="${pg}"
                    th:href="@{/lessons/viewLessons(clusterId=${param.clusterId}, page=${param.page})}">2</a>
+
             </th:block>
         </th:block>
     </div>

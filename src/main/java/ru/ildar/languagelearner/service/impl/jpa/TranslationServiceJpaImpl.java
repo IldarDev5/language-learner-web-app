@@ -2,6 +2,7 @@ package ru.ildar.languagelearner.service.impl.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.ildar.languagelearner.exercise.Exerciser;
 import ru.ildar.languagelearner.controller.dto.TranslationDTO;
 import ru.ildar.languagelearner.database.dao.LessonRepository;
@@ -11,12 +12,11 @@ import ru.ildar.languagelearner.database.domain.Translation;
 import ru.ildar.languagelearner.exception.LessonNotOfThisUserException;
 import ru.ildar.languagelearner.service.TranslationService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-@Service
+@Service("translationService")
 @Transactional
 public class TranslationServiceJpaImpl implements TranslationService
 {
@@ -65,5 +65,13 @@ public class TranslationServiceJpaImpl implements TranslationService
                 })
                 .collect(toList());
         exerciser.setCorrectTranslations(translationDTOs);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public void setTranslationsCount(Exerciser exerciser, long lessonId)
+    {
+        long count = lessonRepository.findTranslationsCount(lessonId);
+        exerciser.setTranslationsCount(count);
     }
 }

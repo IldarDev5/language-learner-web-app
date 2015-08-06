@@ -2,21 +2,27 @@ package ru.ildar.languagelearner.exercise;
 
 import ru.ildar.languagelearner.controller.dto.ExerciseConfigDTO;
 import ru.ildar.languagelearner.controller.dto.TranslationDTO;
+import ru.ildar.languagelearner.database.domain.Cluster;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-public class Exerciser
+public class Exerciser implements Serializable
 {
+    private Cluster lessonCluster;
+
     private List<TranslationDTO> correctTranslations;
     private List<TranslationDTO> actualTranslations;
     private TranslationDTO deletedTranslation;
 
     private TranslationDTO currentTranslation;
+    private long translationsCount;
     private ExerciseConfigDTO config;
 
     private int questionNumber = 0;
+    private int grade;
 
     private Random rand = new Random(new Date().getTime());
 
@@ -42,7 +48,7 @@ public class Exerciser
             deletedTranslation = translation;
         }
 
-        String sentenceToTrans = config.invertLanguages() ? translation.getSentence2() :
+        String sentenceToTrans = config.isInvertLanguages() ? translation.getSentence2() :
                 translation.getSentence1();
 
         TranslationDTO currentTrans = new TranslationDTO();
@@ -52,6 +58,16 @@ public class Exerciser
         currentTranslation = currentTrans;
     }
 
+
+    public Cluster getLessonCluster()
+    {
+        return lessonCluster;
+    }
+
+    public void setLessonCluster(Cluster lessonCluster)
+    {
+        this.lessonCluster = lessonCluster;
+    }
 
     public List<TranslationDTO> getCorrectTranslations()
     {
@@ -101,5 +117,25 @@ public class Exerciser
     public void setCurrentTranslation(TranslationDTO currentTranslation)
     {
         this.currentTranslation = currentTranslation;
+    }
+
+    public long getTranslationsCount()
+    {
+        return translationsCount;
+    }
+
+    public void setTranslationsCount(long translationsCount)
+    {
+        this.translationsCount = translationsCount;
+    }
+
+    public int getGrade()
+    {
+        return grade;
+    }
+
+    public void setGrade(int grade)
+    {
+        this.grade = grade;
     }
 }

@@ -36,7 +36,7 @@ public class ExerciseConfigDTO implements Serializable
     }
 
     /** Should primary language (that, sentences in which are to be translated) be the second one */
-    public boolean invertLanguages()
+    public boolean isInvertLanguages()
     {
         return invertLanguages;
     }

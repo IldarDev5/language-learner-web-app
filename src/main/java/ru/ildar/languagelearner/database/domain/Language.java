@@ -1,11 +1,12 @@
 package ru.ildar.languagelearner.database.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /** Represents languages in the application. Other entities use this entity to define
  * a sentence and translation languages. */
 @Entity
-public class Language
+public class Language implements Serializable
 {
     /** Entity's primary key - name of the language in English */
     @Id

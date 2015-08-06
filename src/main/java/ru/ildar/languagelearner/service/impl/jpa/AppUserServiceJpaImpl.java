@@ -19,7 +19,7 @@ import ru.ildar.languagelearner.service.AppUserService;
 import javax.transaction.Transactional;
 import java.util.Arrays;
 
-@Service
+@Service("appUserService")
 @Transactional
 public class AppUserServiceJpaImpl implements UserDetailsService, AppUserService
 {

@@ -4,6 +4,7 @@ import ru.ildar.languagelearner.controller.dto.ClusterDTO;
 import ru.ildar.languagelearner.controller.dto.LanguagePairDTO;
 import ru.ildar.languagelearner.database.domain.Cluster;
 import ru.ildar.languagelearner.exception.*;
+import ru.ildar.languagelearner.exercise.Exerciser;
 
 import java.util.List;
 
@@ -55,4 +56,6 @@ public interface ClusterService
      * @return Cluster specified by this name if the exception has not been thrown
      */
     Cluster checkClusterOwner(long clusterId, String nickname);
+
+    void setClusterOfLesson(Exerciser exerciser, Long lessonId, String userNickname);
 }

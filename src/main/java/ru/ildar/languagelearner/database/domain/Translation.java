@@ -1,13 +1,14 @@
 package ru.ildar.languagelearner.database.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /** Pair of sentences. One sentence is the translation of another sentence in its language. */
 @Entity
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"lesson_id", "sentence1", "sentence2"})
 })
-public class Translation
+public class Translation implements Serializable
 {
     /** Entity's primary key */
     @Id
