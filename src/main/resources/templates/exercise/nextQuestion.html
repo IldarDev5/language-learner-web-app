@@ -1,8 +1,42 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--@thymesVar id="exerciser" type="ru.ildar.languagelearner.exercise.Exerciser"-->
 <head>
-    <title></title>
+    <title tiles:fragment="title"
+           th:text="'Test - Question #' + ${exerciser.questionNumber}">Test</title>
 </head>
 <body>
+    <div tiles:fragment="content" id="content">
+        <script type="text/javascript">
+            var transId = "<th:block th:text='${exerciser.currentTranslation.translationId}'></th:block>";
+            var csrfToken = "<th:block th:text='${_csrf.token}'></th:block>";
+            var invertLangs = "<th:block th:text='${exerciser.config.invertLanguages}'></th:block>";
+        </script>
+        <script type="text/javascript" src="/scripts/nextQuestion.js"></script>
+        <h2 th:text="'Question #' + ${exerciser.questionNumber}"></h2>
+
+        <fieldset>
+        <legend th:with="cl=${exerciser.lessonCluster}" style="align-content: center"
+             th:text="'Translate the sentence from ' +
+        ${exerciser.config.invertLanguages ? cl.language2.defaultName : cl.language1.defaultName} + ' to ' +
+        ${exerciser.config.invertLanguages ? cl.language1.defaultName : cl.language2.defaultName}">
+            Translate the sentence from English to Russian
+        </legend>
+        <div id="translateData">
+            <div style="text-align: center" th:text="${exerciser.currentTranslation.sentence1}">
+                Hello World
+            </div>
+            <div style="text-align: center">
+                <input type="text" name="translation" id="translation" size="70" />
+            </div>
+        </div>
+
+        <div id="buttons">
+            <input type="submit" id="check" value="Check" />
+            <input type="submit" name="_eventId_submit" id="submit" value="Next" />
+            <input type="submit" name="_eventId_cancel" value="Cancel" />
+        </div>
+        </fieldset>
+    </div>
 </body>
 </html>

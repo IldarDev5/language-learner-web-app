@@ -32,8 +32,7 @@
         <transition to="showNextQuestion" />
     </action-state>
 
-    <view-state id="showNextQuestion" model="exerciser.getCurrentTranslation()"
-                view="exercise/nextQuestion">
+    <view-state id="showNextQuestion" view="exercise/nextQuestion">
         <transition on="submit" to="continueExercise">
             <evaluate expression="exerciser.incrementQuestionNumber()" />
             <evaluate expression="exerciser.saveCurrentTranslation()" />

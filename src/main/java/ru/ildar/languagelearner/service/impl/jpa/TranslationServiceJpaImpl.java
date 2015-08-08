@@ -74,4 +74,10 @@ public class TranslationServiceJpaImpl implements TranslationService
         long count = lessonRepository.findTranslationsCount(lessonId);
         exerciser.setTranslationsCount(count);
     }
+
+    @Override
+    public Translation getTranslation(Long translationId)
+    {
+        return translationRepository.findOne(translationId);
+    }
 }
