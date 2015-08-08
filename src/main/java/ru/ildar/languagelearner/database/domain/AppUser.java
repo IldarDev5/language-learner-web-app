@@ -29,6 +29,12 @@ public class AppUser implements Serializable
     @Column(length = 50, nullable = false)
     private String password;
 
+    public AppUser() { }
+    public AppUser(String nickname)
+    {
+        this.nickname = nickname;
+    }
+
     public Long getUserId()
     {
         return userId;

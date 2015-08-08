@@ -36,6 +36,12 @@ public class Cluster implements Serializable
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastLessonAddDate;
 
+    public Cluster() { }
+    public Cluster(AppUser appUser)
+    {
+        this.appUser = appUser;
+    }
+
 
     public Long getClusterId()
     {

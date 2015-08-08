@@ -47,6 +47,12 @@ public class Lesson implements Serializable
     @Formula("(select count(*) from translation t where t.lesson_id = lesson_id)")
     private int translationsCount;
 
+    public Lesson() { }
+    public Lesson(Cluster cluster)
+    {
+        this.cluster = cluster;
+    }
+
     @PrePersist
     public void prePersist()
     {

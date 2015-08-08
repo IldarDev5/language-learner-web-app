@@ -19,8 +19,13 @@ import java.util.List;
 @Transactional
 public class LessonServiceJpaImpl implements LessonService
 {
-    @Autowired
     private LessonRepository lessonRepository;
+
+    @Autowired
+    public LessonServiceJpaImpl(LessonRepository lessonRepository)
+    {
+        this.lessonRepository = lessonRepository;
+    }
 
     private final int LESSONS_PER_PAGE = 10;
 

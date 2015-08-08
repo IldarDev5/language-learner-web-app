@@ -5,13 +5,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import ru.ildar.languagelearner.controller.dto.ClusterDTO;
 import ru.ildar.languagelearner.controller.dto.LanguagePairDTO;
-import ru.ildar.languagelearner.database.domain.AppUser;
-import ru.ildar.languagelearner.database.domain.Cluster;
-import ru.ildar.languagelearner.database.domain.Language;
-import ru.ildar.languagelearner.exception.ClusterAlreadyExistsException;
-import ru.ildar.languagelearner.exception.ClusterNotOfThisUserException;
-import ru.ildar.languagelearner.exception.LanguageNotFoundException;
-import ru.ildar.languagelearner.exception.LanguagesAreEqualException;
+import ru.ildar.languagelearner.database.domain.*;
+import ru.ildar.languagelearner.exception.*;
 import ru.ildar.languagelearner.service.BaseServiceTest;
 
 import java.util.ArrayList;
