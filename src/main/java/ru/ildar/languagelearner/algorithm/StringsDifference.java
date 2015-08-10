@@ -8,15 +8,16 @@ public class StringsDifference
 {
     private String correctSentence;
 
-    public enum Modification { DELETE, INSERT, REPLACE }
-
     private Map<Integer, Modification> modifications;
+    private Integer howMuchAdd;
 
     public StringsDifference() { }
-    public StringsDifference(String correctSentence, Map<Integer, Modification> modifications)
+    public StringsDifference(String correctSentence,
+                             Map<Integer, Modification> modifications, Integer howMuchAdd)
     {
         this.correctSentence = correctSentence;
         this.modifications = modifications;
+        this.howMuchAdd = howMuchAdd;
     }
 
     public String getCorrectSentence()
@@ -24,18 +25,42 @@ public class StringsDifference
         return correctSentence;
     }
 
-    public void setCorrectSentence(String correctSentence)
-    {
-        this.correctSentence = correctSentence;
-    }
-
     public Map<Integer, Modification> getModifications()
     {
         return modifications;
     }
 
-    public void setModifications(Map<Integer, Modification> modifications)
+    public Integer getHowMuchAdd()
     {
-        this.modifications = modifications;
+        return howMuchAdd;
+    }
+}
+
+class Modification
+{
+    public enum ModifOperation { DELETE, INSERT, SYMBOLS_EQUAL, DELETE_ALL, INSERT_ALL, REPLACE }
+
+    private ModifOperation modifOperation;
+    private Character symbol;
+
+    public Modification() { }
+    public Modification(ModifOperation modifOperation)
+    {
+        this.modifOperation = modifOperation;
+    }
+    public Modification(ModifOperation modifOperation, Character symbol)
+    {
+        this.modifOperation = modifOperation;
+        this.symbol = symbol;
+    }
+
+    public ModifOperation getModifOperation()
+    {
+        return modifOperation;
+    }
+
+    public Character getSymbol()
+    {
+        return symbol;
     }
 }
