@@ -17,5 +17,5 @@ public interface LessonRepository extends CrudRepository<Lesson, Long>
     List<Lesson> findByCluster(Cluster cluster, Pageable pageable);
 
     @Query("select count(t) from Translation t where t.lesson.lessonId = ?1")
-    long findTranslationsCount(long lessonId);
+    Long findTranslationsCount(long lessonId);
 }

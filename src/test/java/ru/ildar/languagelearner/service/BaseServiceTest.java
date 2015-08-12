@@ -8,6 +8,7 @@ import ru.ildar.languagelearner.database.dao.*;
 import ru.ildar.languagelearner.service.impl.jpa.AppUserServiceJpaImpl;
 import ru.ildar.languagelearner.service.impl.jpa.ClusterServiceJpaImpl;
 import ru.ildar.languagelearner.service.impl.jpa.LessonServiceJpaImpl;
+import ru.ildar.languagelearner.service.impl.jpa.TranslationServiceJpaImpl;
 
 /** Base class for all service test classes of this application */
 @RunWith(MockitoJUnitRunner.class)
@@ -29,6 +30,7 @@ public abstract class BaseServiceTest
     protected AppUserServiceJpaImpl appUserService;
     protected ClusterServiceJpaImpl clusterService;
     protected LessonServiceJpaImpl lessonService;
+    protected TranslationServiceJpaImpl translationService;
 
     protected Object[] repos;
 
@@ -42,5 +44,6 @@ public abstract class BaseServiceTest
         clusterService = new ClusterServiceJpaImpl(appUserServiceMock, languageRepository,
                 clusterRepository, lessonRepository);
         lessonService = new LessonServiceJpaImpl(lessonRepository);
+        translationService = new TranslationServiceJpaImpl(translationRepository, lessonRepository);
     }
 }

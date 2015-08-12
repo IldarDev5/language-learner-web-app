@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import ru.ildar.languagelearner.algorithm.StringsDifferenceAlgorithm;
 import ru.ildar.languagelearner.config.WebConfig;
 import ru.ildar.languagelearner.service.*;
 
@@ -52,4 +53,10 @@ public class TestConfig
 
     @Bean
     public TranslationService translationService() { return mock(TranslationService.class); }
+
+    @Bean
+    public StringsDifferenceAlgorithm stringsDifferenceAlgorithm()
+    {
+        return mock(StringsDifferenceAlgorithm.class);
+    }
 }

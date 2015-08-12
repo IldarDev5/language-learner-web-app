@@ -11,6 +11,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import ru.ildar.languagelearner.algorithm.StringsDifferenceAlgorithm;
 import ru.ildar.languagelearner.service.AppUserService;
 import ru.ildar.languagelearner.service.ClusterService;
 import ru.ildar.languagelearner.service.LanguageService;
@@ -38,6 +39,8 @@ public abstract class BaseControllerTest
     protected LanguageService languageServiceMock;
     @Autowired
     protected LessonService lessonServiceMock;
+    @Autowired
+    protected StringsDifferenceAlgorithm stringsDifferenceAlgorithm;
 
     @Autowired
     protected WebApplicationContext webApplicationContext;
@@ -50,7 +53,7 @@ public abstract class BaseControllerTest
     public void setUp()
     {
         services = new Object[]{appUserServiceMock, userDetailsServiceMock, clusterServiceMock,
-                languageServiceMock, lessonServiceMock};
+                languageServiceMock, lessonServiceMock, stringsDifferenceAlgorithm };
         Mockito.reset(services);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .addFilters(springSecurityFilterChain)

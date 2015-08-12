@@ -22,5 +22,5 @@ public interface TranslationService
 
     void setTranslationsCount(Exerciser exerciser, long lessonId);
 
-    Translation getTranslation(Long translationId);
+    Translation getTranslation(long translationId);
 }
