@@ -1,5 +1,6 @@
 package ru.ildar.languagelearner.algorithm;
 
+import java.util.List;
 import java.util.Map;
 
 /** Object that carries the information about modifications needed to
@@ -7,60 +8,41 @@ import java.util.Map;
 public class StringsDifference
 {
     private String correctSentence;
-
-    private Map<Integer, Modification> modifications;
+    private Map<Integer, List<Modification>> modifications;
     private Integer howMuchAdd;
 
     public StringsDifference() { }
     public StringsDifference(String correctSentence,
-                             Map<Integer, Modification> modifications, Integer howMuchAdd)
+                             Map<Integer, List<Modification>> modifications, Integer howMuchAdd)
     {
         this.correctSentence = correctSentence;
         this.modifications = modifications;
         this.howMuchAdd = howMuchAdd;
     }
 
+    /** The correct sentence */
     public String getCorrectSentence()
     {
         return correctSentence;
     }
 
-    public Map<Integer, Modification> getModifications()
+    /** Modifications needed to perform on the entered string to match it
+     * to the correct sentence, and in a minimal amount of steps.
+     * Key is the index of the string to which to perform the corresponding list of modifications.<br />
+     * Modifications for the key are performed in a row as they are put in this list.
+     * The index for performing modification is not static, e.g. if the list for key '1'
+     * contains 3 INSERT modifications, the first insertion is made after the index 1, the
+     * second insertion is made after the index 2, and the third insertion is made after the
+     * index 3. The other keys modification lists must also adjust their indexes, i.e, their keys. */
+    public Map<Integer, List<Modification>> getModifications()
     {
         return modifications;
     }
 
+    /** A counter for INSERT_ALL modification, that shows how much symbols we need to insert
+     * in the beginning of the sentence. Symbols are taken from the beginning of the correct sentence. */
     public Integer getHowMuchAdd()
     {
         return howMuchAdd;
-    }
-}
-
-class Modification
-{
-    public enum ModifOperation { DELETE, INSERT, SYMBOLS_EQUAL, DELETE_ALL, INSERT_ALL, REPLACE }
-
-    private ModifOperation modifOperation;
-    private Character symbol;
-
-    public Modification() { }
-    public Modification(ModifOperation modifOperation)
-    {
-        this.modifOperation = modifOperation;
-    }
-    public Modification(ModifOperation modifOperation, Character symbol)
-    {
-        this.modifOperation = modifOperation;
-        this.symbol = symbol;
-    }
-
-    public ModifOperation getModifOperation()
-    {
-        return modifOperation;
-    }
-
-    public Character getSymbol()
-    {
-        return symbol;
     }
 }
