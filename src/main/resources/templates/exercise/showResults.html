@@ -1,8 +1,16 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title></title>
+    <title tiles:fragment="title">Exercise Results</title>
 </head>
 <body>
+    <div tiles:fragment="content">
+        <h2>Exercise Results</h2>
+        TODO
+
+        <form method="post" th:action="${flowExecutionUrl}">
+            <input type="submit" value="End exercise" name="_eventId_endTest" />
+        </form>
+    </div>
 </body>
 </html>

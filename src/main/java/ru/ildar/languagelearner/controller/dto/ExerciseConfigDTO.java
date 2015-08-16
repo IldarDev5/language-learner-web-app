@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ExerciseConfigDTO implements Serializable
 {
     /** Count of questions to have in the test */
-    private int countOfQuestions = 25;
+    private int countOfQuestions;
     /** Should all questions be unique or there should be also duplicates.
      * If true, the count of questions is equal to the count of translations in the lesson. */
     private boolean uniqueQuestions;

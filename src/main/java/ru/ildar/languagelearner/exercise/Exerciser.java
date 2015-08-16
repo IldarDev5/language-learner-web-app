@@ -21,21 +21,21 @@ public class Exerciser implements Serializable
     private long translationsCount;
     private ExerciseConfigDTO config;
 
-    private int questionNumber = 0;
+    private int questionNumber = 1;
     private int grade;
 
     private Random rand = new Random(new Date().getTime());
 
     public boolean continueTest()
     {
-        return questionNumber < config.getCountOfQuestions();
+        return questionNumber <= config.getCountOfQuestions();
     }
 
     public void incrementQuestionNumber() { questionNumber++; }
 
     public void saveCurrentTranslation()
     {
-        actualTranslations.add(currentTranslation);
+        //actualTranslations.add(currentTranslation);
     }
 
     public void nextQuestion()
