@@ -14,8 +14,8 @@ public interface StringsDifferenceAlgorithm
     /**
      * Calculates the difference between two strings.
      * Method returns the modifications needed to turn sentence2 into sentence1.
-     * @param sentence1 Correct string
-     * @param sentence2 String for which modifications need to be computed to turn it into the sentence1
+     * @param sentence1 String for which modifications need to be computed to turn it into the sentence2
+     * @param sentence2 The correct string
      */
     StringsDifference calculateDifference(String sentence1, String sentence2);
 }

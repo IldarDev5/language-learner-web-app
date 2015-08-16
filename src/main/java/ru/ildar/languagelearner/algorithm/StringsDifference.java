@@ -2,18 +2,19 @@ package ru.ildar.languagelearner.algorithm;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /** Object that carries the information about modifications needed to
  * turn the string to another string. */
 public class StringsDifference
 {
     private String correctSentence;
-    private Map<Integer, List<Modification>> modifications;
+    private Set<IndexModification> modifications;
     private Integer howMuchAdd;
 
     public StringsDifference() { }
     public StringsDifference(String correctSentence,
-                             Map<Integer, List<Modification>> modifications, Integer howMuchAdd)
+                             Set<IndexModification> modifications, Integer howMuchAdd)
     {
         this.correctSentence = correctSentence;
         this.modifications = modifications;
@@ -34,7 +35,7 @@ public class StringsDifference
      * contains 3 INSERT modifications, the first insertion is made after the index 1, the
      * second insertion is made after the index 2, and the third insertion is made after the
      * index 3. The other keys modification lists must also adjust their indexes, i.e, their keys. */
-    public Map<Integer, List<Modification>> getModifications()
+    public Set<IndexModification> getModifications()
     {
         return modifications;
     }

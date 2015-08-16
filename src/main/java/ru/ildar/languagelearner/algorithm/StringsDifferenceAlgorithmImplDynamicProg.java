@@ -2,10 +2,7 @@ package ru.ildar.languagelearner.algorithm;
 
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 import static ru.ildar.languagelearner.algorithm.Modification.*;
 
@@ -85,7 +82,7 @@ public class StringsDifferenceAlgorithmImplDynamicProg implements StringsDiffere
            by tracing back through the table
          */
         Integer howMuchAdd = null;
-        Map<Integer, List<Modification>> modifications = new TreeMap<>();
+        Map<Integer, IndexModification> modifications = new TreeMap<>();
         Entry currEntry = new Entry(n, m);
         do
         {
@@ -94,33 +91,29 @@ public class StringsDifferenceAlgorithmImplDynamicProg implements StringsDiffere
             int j = currEntry.getX();
 
             //If symbols at i and j are equals, no need here to modify anything, omit this situation
-            if(modif[i][j].getModifOperation() != ModifOperation.SYMBOLS_EQUAL)
+            //if(modif[i][j].getModifOperation() != ModifOperation.SYMBOLS_EQUAL)
             {
                 if(modif[i][j].getModifOperation() == ModifOperation.DELETE_ALL)
                 {
                     //Delete all symbol before and including this one
-                    for(int t = i;t > 0;t--)
-                    {
-                        List<Modification> modifs = modifications.getOrDefault(t - 1, new ArrayList<>());
-                        modifs.add(0, modif[i][j]);
-
-                        modifications.put(t - 1, modifs);
-                    }
+                    IndexModification im = modifications.getOrDefault(i - 1, new IndexModification(i - 1));
+                    im.getModifications().add(0, modif[i][j]);
+                    modifications.put(i - 1, im);
                 }
                 else if(modif[i][j].getModifOperation() == ModifOperation.INSERT_ALL)
                 {
                     //Insert a number of symbols in the beginning of the string
-                    List<Modification> modifs = modifications.getOrDefault(0, new ArrayList<>());
-                    modifs.add(0, modif[i][j]);
-                    modifications.put(0, modifs);
+                    IndexModification im = modifications.getOrDefault(0, new IndexModification(0));
+                    im.getModifications().add(0, modif[i][j]);
+                    modifications.put(0, im);
                     howMuchAdd = j;
                 }
                 else
                 {
                     //INSERT, REPLACE or DELETE operation
-                    List<Modification> modifs = modifications.getOrDefault(i - 1, new ArrayList<>());
-                    modifs.add(0, modif[i][j]);
-                    modifications.put(i - 1, modifs);
+                    IndexModification im = modifications.getOrDefault(i - 1, new IndexModification(i - 1));
+                    im.getModifications().add(0, modif[i][j]);
+                    modifications.put(i - 1, im);
                 }
             }
 
@@ -128,7 +121,14 @@ public class StringsDifferenceAlgorithmImplDynamicProg implements StringsDiffere
         }
         while(currEntry != null);
 
-        return new StringsDifference(sentence2, modifications, howMuchAdd);
+        Set<IndexModification> set = new TreeSet<>(indexComparator());
+        set.addAll(modifications.values());
+        return new StringsDifference(sentence2, set, howMuchAdd);
+    }
+
+    private Comparator<IndexModification> indexComparator()
+    {
+        return (o1, o2) -> o1.getIndex() - o2.getIndex();
     }
 }
 
