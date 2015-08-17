@@ -2,6 +2,9 @@ package ru.ildar.languagelearner.service.impl.jpa;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Matchers;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import ru.ildar.languagelearner.controller.dto.LessonDTO;
 import ru.ildar.languagelearner.controller.dto.TranslationDTO;
 import ru.ildar.languagelearner.database.domain.AppUser;
@@ -97,6 +100,69 @@ public class LessonServiceJpaImplTest extends BaseServiceTest
         assertThat(lesson.getCluster(), is(cluster));
         assertThat(lesson.getDescription(), is(lessonDTO.getDescription()));
         assertThat(lesson.getLessonName(), is(lessonDTO.getLessonName()));
+
+        verifyNoMoreInteractions(repos);
+    }
+
+    @Test(expected = LessonNotOfThisUserException.class)
+    public void testAddTestGrade_LessonNotOfThisUser_ShouldThrowException()
+    {
+        String nickname = "Ildar";
+        String anotherNick = "James";
+        long lessonId = 5;
+        Lesson lesson = new Lesson(new Cluster(new AppUser(anotherNick)));
+
+        doReturn(lesson).when(lessonRepository).findOne(lessonId);
+
+        lessonService.addTestGrade(lessonId, 0.9, nickname);
+    }
+
+    @Test
+    public void testAddTestGrade_EverythingIsOk()
+    {
+        String nickname = "Ildar";
+        long lessonId = 5;
+        Lesson lesson = new Lesson(new Cluster(new AppUser(nickname)));
+        lesson.setSumGrade(5.0);
+        lesson.setTimesLessonTaken(10);
+
+        doReturn(lesson).when(lessonRepository).findOne(lessonId);
+
+        lessonService.addTestGrade(lessonId, 0.9, nickname);
+
+        assertThat(lesson.getSumGrade(), is(5.9));
+        assertThat(lesson.getTimesLessonTaken(), is(11l));
+
+        verify(lessonRepository).findOne(lessonId);
+        verifyNoMoreInteractions(repos);
+    }
+
+    @Test
+    public void testGetLessonsForPage()
+    {
+        Cluster cluster = new Cluster();
+        int page = 10;
+        List<Lesson> lessons = Arrays.asList(new Lesson(), new Lesson());
+
+        doReturn(lessons).when(lessonRepository).findByCluster(Matchers.any(Cluster.class),
+                Matchers.any(PageRequest.class));
+
+        List<Lesson> ret = lessonService.getLessonsForPage(cluster, page);
+        assertThat(ret, is(lessons));
+        assertThat(ret.size(), is(2));
+
+        ArgumentCaptor<Cluster> clusterCaptor = ArgumentCaptor.forClass(Cluster.class);
+        ArgumentCaptor<PageRequest> pageCaptor = ArgumentCaptor.forClass(PageRequest.class);
+
+        verify(lessonRepository).findByCluster(clusterCaptor.capture(), pageCaptor.capture());
+
+        Cluster retCl = clusterCaptor.getValue();
+        PageRequest retPR = pageCaptor.getValue();
+
+        assertThat(retCl, is(cluster));
+        assertThat(retPR.getSort(), is(new Sort(Sort.Direction.DESC, "addDate")));
+        assertThat(retPR.getPageNumber(), is(page - 1));
+        assertThat(retPR.getPageSize(), is(10));
 
         verifyNoMoreInteractions(repos);
     }

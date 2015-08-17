@@ -88,7 +88,6 @@ public class LessonServiceJpaImpl implements LessonService
     @Override
     public void addTestGrade(long lessonId, double grade, String nickname)
     {
-        System.err.println("addTestGrade: " + lessonId + " " + grade + " " + nickname);
         Lesson lesson = lessonRepository.findOne(lessonId);
         if(!lesson.getCluster().getAppUser().getNickname().equals(nickname))
         {
