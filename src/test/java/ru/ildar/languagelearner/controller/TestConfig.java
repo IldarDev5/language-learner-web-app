@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.ildar.languagelearner.algorithm.StringsDifferenceAlgorithm;
 import ru.ildar.languagelearner.config.WebConfig;
+import ru.ildar.languagelearner.exercise.ExerciserGrade;
 import ru.ildar.languagelearner.service.*;
 
 import static org.mockito.Mockito.mock;
@@ -58,5 +59,11 @@ public class TestConfig
     public StringsDifferenceAlgorithm stringsDifferenceAlgorithm()
     {
         return mock(StringsDifferenceAlgorithm.class);
+    }
+
+    @Bean
+    public ExerciserGrade exerciserGrade()
+    {
+        return mock(ExerciserGrade.class);
     }
 }
