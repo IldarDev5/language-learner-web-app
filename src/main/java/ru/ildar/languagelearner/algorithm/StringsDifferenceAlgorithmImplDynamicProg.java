@@ -81,6 +81,7 @@ public class StringsDifferenceAlgorithmImplDynamicProg implements StringsDiffere
         /* Gathering information about the minimal modification path
            by tracing back through the table
          */
+        int modificationsCount = 0;
         Integer howMuchAdd = null;
         Map<Integer, IndexModification> modifications = new TreeMap<>();
         Entry currEntry = new Entry(n, m);
@@ -99,6 +100,8 @@ public class StringsDifferenceAlgorithmImplDynamicProg implements StringsDiffere
                     IndexModification im = modifications.getOrDefault(i - 1, new IndexModification(i - 1));
                     im.getModifications().add(0, modif[i][j]);
                     modifications.put(i - 1, im);
+
+                    modificationsCount += (i - 1);
                 }
                 else if(modif[i][j].getModifOperation() == ModifOperation.INSERT_ALL)
                 {
@@ -107,6 +110,8 @@ public class StringsDifferenceAlgorithmImplDynamicProg implements StringsDiffere
                     im.getModifications().add(0, modif[i][j]);
                     modifications.put(0, im);
                     howMuchAdd = j;
+
+                    modificationsCount += howMuchAdd;
                 }
                 else
                 {
@@ -114,6 +119,11 @@ public class StringsDifferenceAlgorithmImplDynamicProg implements StringsDiffere
                     IndexModification im = modifications.getOrDefault(i - 1, new IndexModification(i - 1));
                     im.getModifications().add(0, modif[i][j]);
                     modifications.put(i - 1, im);
+
+                    if(modif[i][j].getModifOperation() != ModifOperation.SYMBOLS_EQUAL)
+                    {
+                        modificationsCount++;
+                    }
                 }
             }
 
@@ -123,7 +133,7 @@ public class StringsDifferenceAlgorithmImplDynamicProg implements StringsDiffere
 
         Set<IndexModification> set = new TreeSet<>(indexComparator());
         set.addAll(modifications.values());
-        return new StringsDifference(sentence2, set, howMuchAdd);
+        return new StringsDifference(sentence2, modificationsCount, set, howMuchAdd);
     }
 
     private Comparator<IndexModification> indexComparator()

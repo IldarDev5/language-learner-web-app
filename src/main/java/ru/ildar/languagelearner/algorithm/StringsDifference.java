@@ -11,12 +11,14 @@ public class StringsDifference
     private String correctSentence;
     private Set<IndexModification> modifications;
     private Integer howMuchAdd;
+    private int modificationsCount;
 
     public StringsDifference() { }
-    public StringsDifference(String correctSentence,
+    public StringsDifference(String correctSentence, int modificationsCount,
                              Set<IndexModification> modifications, Integer howMuchAdd)
     {
         this.correctSentence = correctSentence;
+        this.modificationsCount = modificationsCount;
         this.modifications = modifications;
         this.howMuchAdd = howMuchAdd;
     }
@@ -45,5 +47,11 @@ public class StringsDifference
     public Integer getHowMuchAdd()
     {
         return howMuchAdd;
+    }
+
+    /** Count of modifications to make */
+    public int getModificationsCount()
+    {
+        return modificationsCount;
     }
 }

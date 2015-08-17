@@ -1,5 +1,9 @@
 package ru.ildar.languagelearner.exercise;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
 import ru.ildar.languagelearner.controller.dto.ExerciseConfigDTO;
 import ru.ildar.languagelearner.controller.dto.TranslationDTO;
 import ru.ildar.languagelearner.database.domain.Cluster;
@@ -9,8 +13,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+/** Exerciser of a current user(session). */
+@Component("userExerciser")
+@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Exerciser implements Serializable
 {
+    @Autowired
+    private ExerciserGrade exerciserGrade;
+
     private Cluster lessonCluster;
 
     private List<TranslationDTO> correctTranslations;
@@ -22,7 +32,7 @@ public class Exerciser implements Serializable
     private ExerciseConfigDTO config;
 
     private int questionNumber = 1;
-    private int grade;
+    private Double sumGrade;
 
     private Random rand = new Random(new Date().getTime());
 
@@ -58,6 +68,28 @@ public class Exerciser implements Serializable
         currentTranslation = currentTrans;
     }
 
+    public void incrementSumGrade()
+    {
+        sumGrade += exerciserGrade.getGrade();
+    }
+
+    public Double getTotalGrade()
+    {
+        return sumGrade / (questionNumber - 1);
+    }
+
+    public void resetExerciser()
+    {
+        lessonCluster = null;
+        correctTranslations = null;
+        actualTranslations = null;
+        currentTranslation = null;
+        translationsCount = 0;
+        config = null;
+        questionNumber = 1;
+        sumGrade = 0.0;
+    }
+
 
     public Cluster getLessonCluster()
     {
@@ -67,6 +99,7 @@ public class Exerciser implements Serializable
     public void setLessonCluster(Cluster lessonCluster)
     {
         this.lessonCluster = lessonCluster;
+        this.exerciserGrade.setClusterId(lessonCluster.getClusterId());
     }
 
     public List<TranslationDTO> getCorrectTranslations()
@@ -129,13 +162,13 @@ public class Exerciser implements Serializable
         this.translationsCount = translationsCount;
     }
 
-    public int getGrade()
+    public Double getSumGrade()
     {
-        return grade;
+        return sumGrade;
     }
 
-    public void setGrade(int grade)
+    public void setSumGrade(Double sumGrade)
     {
-        this.grade = grade;
+        this.sumGrade = sumGrade;
     }
 }

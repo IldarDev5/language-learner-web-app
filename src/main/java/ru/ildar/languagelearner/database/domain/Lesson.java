@@ -39,7 +39,7 @@ public class Lesson implements Serializable
 
     /** The sum of all grades received by this lesson exercises */
     @Column(nullable = false)
-    private long sumGrade;
+    private Double sumGrade;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lesson")
     private List<Translation> translations;
@@ -58,7 +58,7 @@ public class Lesson implements Serializable
     {
         addDate = new Date();
         timesLessonTaken = 0;
-        sumGrade = 0;
+        sumGrade = 0.0;
     }
 
     public Long getLessonId()
@@ -136,12 +136,12 @@ public class Lesson implements Serializable
         this.timesLessonTaken = timesLessonTaken;
     }
 
-    public long getSumGrade()
+    public Double getSumGrade()
     {
         return sumGrade;
     }
 
-    public void setSumGrade(long sumGrade)
+    public void setSumGrade(Double sumGrade)
     {
         this.sumGrade = sumGrade;
     }

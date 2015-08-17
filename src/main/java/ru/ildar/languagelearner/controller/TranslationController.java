@@ -9,6 +9,8 @@ import ru.ildar.languagelearner.algorithm.StringsDifferenceAlgorithm;
 import ru.ildar.languagelearner.controller.dto.ExerciseTranslationDTO;
 import ru.ildar.languagelearner.database.domain.Translation;
 import ru.ildar.languagelearner.exception.LessonNotOfThisUserException;
+import ru.ildar.languagelearner.exception.NotThatClusterException;
+import ru.ildar.languagelearner.exercise.ExerciserGrade;
 import ru.ildar.languagelearner.service.TranslationService;
 
 import java.security.Principal;
@@ -23,6 +25,8 @@ public class TranslationController
     private TranslationService translationService;
     @Autowired
     private StringsDifferenceAlgorithm stringsDifferenceAlgorithm;
+    @Autowired
+    private ExerciserGrade exerciserGrade;
 
     @RequestMapping(value = "checkTranslation", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,6 +49,15 @@ public class TranslationController
         StringsDifference difference = stringsDifferenceAlgorithm
                 .calculateDifference(trans.getTranslationSentence(), correctTranslation);
         toReturn.put("difference", difference);
+
+        //Calculating the error using formula ERR = 1 - k/100, where k is the number of modif-s to make
+        exerciserGrade.setGrade(1 - (double)difference.getModificationsCount() / 100);
+        if(tr.getLesson().getCluster().getClusterId() != exerciserGrade.getClusterId())
+            //Translation is not from this cluster
+        {
+            throw new NotThatClusterException();
+        }
+
         return toReturn;
     }
 }

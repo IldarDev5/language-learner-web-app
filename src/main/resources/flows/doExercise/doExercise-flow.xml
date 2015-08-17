@@ -7,10 +7,11 @@
 
     <var class="ru.ildar.languagelearner.controller.dto.ExerciseConfigDTO" name="configDTO" />
     <var class="ru.ildar.languagelearner.exercise.Exerciser" name="exerciser" />
-
     <input name="lessonId" type="java.lang.Long" />
 
     <on-start>
+        <set name="exerciser" value="userExerciser" />
+        <evaluate expression="exerciser.resetExerciser()" />
         <evaluate expression="clusterService.setClusterOfLesson(exerciser, lessonId, currentUser.name)" />
         <evaluate expression="translationService.setTranslationsCount(exerciser, lessonId)" />
     </on-start>
@@ -35,14 +36,14 @@
     <view-state id="showNextQuestion" view="exercise/nextQuestion">
         <transition on="submit" to="continueExercise">
             <evaluate expression="exerciser.incrementQuestionNumber()" />
-            <evaluate expression="exerciser.saveCurrentTranslation()" />
+            <evaluate expression="exerciser.incrementSumGrade()" />
         </transition>
         <transition on="cancel" to="cancel" />
     </view-state>
 
     <view-state id="endTest" view="exercise/showResults" model="exerciserDTO">
         <on-entry>
-            <evaluate expression="lessonService.addTestGrade(lessonId, exerciser.getGrade(), currentUser.name)" />
+            <evaluate expression="lessonService.addTestGrade(lessonId, exerciser.getTotalGrade(), currentUser.name)" />
         </on-entry>
         <transition on="endTest" to="cancel" />
     </view-state>

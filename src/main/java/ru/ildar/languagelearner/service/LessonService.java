@@ -46,5 +46,5 @@ public interface LessonService
      */
     Lesson addLesson(Cluster cluster, LessonDTO lessonDTO);
 
-    void addTestGrade(long lessonId, int grade, String nickname);
+    void addTestGrade(long lessonId, double grade, String nickname);
 }
