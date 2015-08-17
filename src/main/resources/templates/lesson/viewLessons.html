@@ -18,6 +18,10 @@
         <th:block th:each="lesson : ${lessons}" th:object="${lesson}">
             <h3 th:text="*{lessonName}">Lesson 1</h3>
             <p th:text="*{description}">Full description</p>
+            <p style="font-size: 12px;">
+                Average grade:
+                <b th:text="${lesson.averageGrade()} + '%'">95%</b>
+            </p>
             <p class="post-footer align-right">
 
                 <span th:text="|*{translationsCount} pair(s) of sentences|">25 pairs of sentences</span>

@@ -16,7 +16,7 @@
         <h2 th:text="'Question #' + ${exerciser.questionNumber}"></h2>
 
         <fieldset>
-        <legend th:with="cl=${exerciser.lessonCluster},invertLangs=${exerciser.config.invertLanguages}"
+        <legend th:with="cl=${exerciser.lesson.cluster},invertLangs=${exerciser.config.invertLanguages}"
                 style="align-content: center" th:text="'Translate the sentence from ' +
             ${invertLangs ? cl.language2.defaultName : cl.language1.defaultName} + ' to ' +
             ${invertLangs ? cl.language1.defaultName : cl.language2.defaultName}">

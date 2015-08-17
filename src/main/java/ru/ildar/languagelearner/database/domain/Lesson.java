@@ -61,6 +61,11 @@ public class Lesson implements Serializable
         sumGrade = 0.0;
     }
 
+    public double averageGrade()
+    {
+        return (double)((int)(sumGrade / timesLessonTaken * 10000)) / 100;
+    }
+
     public Long getLessonId()
     {
         return lessonId;

@@ -10,17 +10,17 @@ import org.springframework.stereotype.Component;
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ExerciserGrade
 {
-    private Long clusterId;
+    private Long lessonId;
     private Double grade;
 
-    public Long getClusterId()
+    public Long getLessonId()
     {
-        return clusterId;
+        return lessonId;
     }
 
-    public void setClusterId(Long clusterId)
+    public void setLessonId(Long lessonId)
     {
-        this.clusterId = clusterId;
+        this.lessonId = lessonId;
     }
 
     public Double getGrade()

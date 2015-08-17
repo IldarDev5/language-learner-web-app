@@ -57,5 +57,5 @@ public interface ClusterService
      */
     Cluster checkClusterOwner(long clusterId, String nickname);
 
-    void setClusterOfLesson(Exerciser exerciser, Long lessonId, String userNickname);
+    void setLesson(Exerciser exerciser, Long lessonId, String userNickname);
 }

@@ -12,7 +12,7 @@
     <on-start>
         <set name="exerciser" value="userExerciser" />
         <evaluate expression="exerciser.resetExerciser()" />
-        <evaluate expression="clusterService.setClusterOfLesson(exerciser, lessonId, currentUser.name)" />
+        <evaluate expression="clusterService.setLesson(exerciser, lessonId, currentUser.name)" />
         <evaluate expression="translationService.setTranslationsCount(exerciser, lessonId)" />
     </on-start>
 

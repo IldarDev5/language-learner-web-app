@@ -5,8 +5,13 @@
 </head>
 <body>
     <div tiles:fragment="content">
-        <h2>Exercise Results</h2>
-        TODO
+        <h2>Exercise Results on lesson <th:block th:text="${exerciser.lesson.lessonName}" /></h2>
+
+        <!--@thymesVar id="exerciser" type="ru.ildar.languagelearner.exercise.Exerciser"-->
+        <h3>
+            Your grade is
+            <b th:text="${exerciser.getTotalGrade() * 100}"></b>%
+        </h3>
 
         <form method="post" th:action="${flowExecutionUrl}">
             <input type="submit" value="End exercise" name="_eventId_endTest" />

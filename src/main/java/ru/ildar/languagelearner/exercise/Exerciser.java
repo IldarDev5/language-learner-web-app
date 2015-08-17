@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import ru.ildar.languagelearner.controller.dto.ExerciseConfigDTO;
 import ru.ildar.languagelearner.controller.dto.TranslationDTO;
 import ru.ildar.languagelearner.database.domain.Cluster;
+import ru.ildar.languagelearner.database.domain.Lesson;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -21,7 +22,7 @@ public class Exerciser implements Serializable
     @Autowired
     private ExerciserGrade exerciserGrade;
 
-    private Cluster lessonCluster;
+    private Lesson lesson;
 
     private List<TranslationDTO> correctTranslations;
     private List<TranslationDTO> actualTranslations;
@@ -75,12 +76,12 @@ public class Exerciser implements Serializable
 
     public Double getTotalGrade()
     {
-        return sumGrade / (questionNumber - 1);
+        return (double)((int)(sumGrade / (questionNumber - 1) * 10000)) / 10000;
     }
 
     public void resetExerciser()
     {
-        lessonCluster = null;
+        lesson = null;
         correctTranslations = null;
         actualTranslations = null;
         currentTranslation = null;
@@ -90,16 +91,15 @@ public class Exerciser implements Serializable
         sumGrade = 0.0;
     }
 
-
-    public Cluster getLessonCluster()
+    public Lesson getLesson()
     {
-        return lessonCluster;
+        return lesson;
     }
 
-    public void setLessonCluster(Cluster lessonCluster)
+    public void setLesson(Lesson lesson)
     {
-        this.lessonCluster = lessonCluster;
-        this.exerciserGrade.setClusterId(lessonCluster.getClusterId());
+        this.lesson = lesson;
+        this.exerciserGrade.setLessonId(lesson.getLessonId());
     }
 
     public List<TranslationDTO> getCorrectTranslations()

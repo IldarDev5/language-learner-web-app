@@ -8,8 +8,7 @@ import ru.ildar.languagelearner.algorithm.StringsDifference;
 import ru.ildar.languagelearner.algorithm.StringsDifferenceAlgorithm;
 import ru.ildar.languagelearner.controller.dto.ExerciseTranslationDTO;
 import ru.ildar.languagelearner.database.domain.Translation;
-import ru.ildar.languagelearner.exception.LessonNotOfThisUserException;
-import ru.ildar.languagelearner.exception.NotThatClusterException;
+import ru.ildar.languagelearner.exception.NotThatLessonException;
 import ru.ildar.languagelearner.exercise.ExerciserGrade;
 import ru.ildar.languagelearner.service.TranslationService;
 
@@ -52,10 +51,10 @@ public class TranslationController
 
         //Calculating the error using formula ERR = 1 - k/100, where k is the number of modif-s to make
         exerciserGrade.setGrade(1 - (double)difference.getModificationsCount() / 100);
-        if(tr.getLesson().getCluster().getClusterId() != exerciserGrade.getClusterId())
+        if(tr.getLesson().getLessonId() != exerciserGrade.getLessonId())
             //Translation is not from this cluster
         {
-            throw new NotThatClusterException();
+            throw new NotThatLessonException();
         }
 
         return toReturn;

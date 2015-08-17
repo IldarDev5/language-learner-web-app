@@ -129,7 +129,7 @@ public class ClusterServiceJpaImpl implements ClusterService
     }
 
     @Override
-    public void setClusterOfLesson(Exerciser exerciser, Long lessonId, String userNickname)
+    public void setLesson(Exerciser exerciser, Long lessonId, String userNickname)
     {
         Lesson lesson = lessonRepository.findOne(lessonId);
         Cluster cluster = lesson.getCluster();
@@ -138,6 +138,6 @@ public class ClusterServiceJpaImpl implements ClusterService
             throw new LessonNotOfThisUserException();
         }
 
-        exerciser.setLessonCluster(cluster);
+        exerciser.setLesson(lesson);
     }
 }
