@@ -28,7 +28,7 @@
             <tr>
                 <td>Total lessons for this cluster:</td>
                 <!--@thymesVar id="lessonsCount" type="java.lang.Integer"-->
-                <td th:text="${lessonsCount}">10</td>
+                <td th:text="*{lessonsCount}">10</td>
             </tr>
         </table>
         <a th:href="@{/lessons/viewLessons(clusterId=${cls.clusterId})}">View lessons</a>

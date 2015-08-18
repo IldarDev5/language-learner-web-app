@@ -36,12 +36,20 @@ public class Cluster implements Serializable
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastLessonAddDate;
 
+    @Column(name = "lessons_count")
+    private long lessonsCount;
+
     public Cluster() { }
     public Cluster(AppUser appUser)
     {
         this.appUser = appUser;
     }
 
+    @PrePersist
+    public void prePersist()
+    {
+        lessonsCount = 0;
+    }
 
     public Long getClusterId()
     {
@@ -88,8 +96,8 @@ public class Cluster implements Serializable
         return lastLessonAddDate;
     }
 
-    public void setLastLessonAddDate(Date lastLessonAddDate)
+    public long getLessonsCount()
     {
-        this.lastLessonAddDate = lastLessonAddDate;
+        return lessonsCount;
     }
 }

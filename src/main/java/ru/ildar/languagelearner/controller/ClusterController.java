@@ -101,7 +101,7 @@ public class ClusterController
         {
             model.addAttribute("created", true);
         }
-        model.addAttribute("lessonsCount", lessonService.getLessons(cluster).size());
+
         return new ModelAndView("cluster/viewCluster", "cls", cluster);
     }
 
