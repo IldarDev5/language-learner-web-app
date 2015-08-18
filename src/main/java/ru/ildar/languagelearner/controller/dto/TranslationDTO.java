@@ -17,6 +17,14 @@ public class TranslationDTO implements Serializable
     @Size(max = 500)
     private String sentence2;
 
+    public TranslationDTO() { }
+    public TranslationDTO(Long translationId, String sentence1, String sentence2)
+    {
+        this.translationId = translationId;
+        this.sentence1 = sentence1;
+        this.sentence2 = sentence2;
+    }
+
     public Long getTranslationId()
     {
         return translationId;

@@ -3,11 +3,9 @@ package ru.ildar.languagelearner.service.impl.jpa;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import ru.ildar.languagelearner.controller.dto.TranslationDTO;
-import ru.ildar.languagelearner.database.domain.Cluster;
-import ru.ildar.languagelearner.database.domain.Language;
-import ru.ildar.languagelearner.database.domain.Lesson;
-import ru.ildar.languagelearner.database.domain.Translation;
+import ru.ildar.languagelearner.database.domain.*;
 import ru.ildar.languagelearner.exception.LessonNotFoundException;
+import ru.ildar.languagelearner.exception.LessonNotOfThisUserException;
 import ru.ildar.languagelearner.exercise.Exerciser;
 import ru.ildar.languagelearner.service.BaseServiceTest;
 
@@ -42,12 +40,8 @@ public class TranslationServiceJpaImplTest extends BaseServiceTest
         cluster.setLanguage2(new Language("Russian"));
         Lesson lesson = new Lesson(cluster);
 
-        TranslationDTO translationDTO1 = new TranslationDTO();
-        translationDTO1.setSentence1("Hello World");
-        translationDTO1.setSentence2("Привет, мир");
-        TranslationDTO translationDTO2 = new TranslationDTO();
-        translationDTO2.setSentence1("I'm Ildar");
-        translationDTO2.setSentence2("Я - Ильдар");
+        TranslationDTO translationDTO1 = new TranslationDTO(null, "Hello World", "Привет, мир");
+        TranslationDTO translationDTO2 = new TranslationDTO(null, "I'm Ildar", "Я - Ильдар");
         List<TranslationDTO> translations = Arrays.asList(translationDTO1, translationDTO2);
 
         translationService.addTranslations(lesson, translations);
@@ -104,4 +98,77 @@ public class TranslationServiceJpaImplTest extends BaseServiceTest
 
         assertThat(exerciser.getTranslationsCount(), is(count));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFillExerciser_ExerciserIsNull_ShouldThrowException()
+    {
+        translationService.fillExerciser(1l, null, "Ildar");
+    }
+
+    @Test(expected = LessonNotFoundException.class)
+    public void testFillExerciser_LessonNotFound_ShouldThrowException()
+    {
+        translationService.fillExerciser(1l, new Exerciser(), "Ildar");
+    }
+
+    @Test(expected = LessonNotOfThisUserException.class)
+    public void testFillExerciser_LessonNotOfThisUser_ShouldThrowException()
+    {
+        String nickname = "Ildar";
+        String anotherNick = "James";
+        long lessonId = 1l;
+
+        Lesson lesson = new Lesson(new Cluster(new AppUser(anotherNick)));
+
+        doReturn(lesson).when(lessonRepository).findOne(lessonId);
+
+        translationService.fillExerciser(lessonId, new Exerciser(), nickname);
+    }
+
+    @Test
+    public void testFillExerciser_EverythingIsOk()
+    {
+        String nickname = "Ildar";
+        long lessonId = 1l;
+        Exerciser exerciser = new Exerciser();
+        Lesson lesson = new Lesson(new Cluster(new AppUser(nickname)));
+        Translation tr1 = translation(1l, "Hello", "Привет");
+        Translation tr2 = translation(2l, "Bye", "Пока");
+        List<Translation> translations = Arrays.asList(tr1, tr2);
+
+        doReturn(lesson).when(lessonRepository).findOne(lessonId);
+        doReturn(translations).when(translationRepository).findByLesson_LessonId(lessonId);
+
+        translationService.fillExerciser(lessonId, exerciser, nickname);
+
+        List<TranslationDTO> retTrs = exerciser.getCorrectTranslations();
+        assertThat(retTrs.size(), is(2));
+        int i = 0;
+        for(Translation tr : translations)
+        {
+            assertThat(retTrs.get(i++), allOf(
+                    hasProperty("translationId", is(tr.getTranslationId())),
+                    hasProperty("sentence1", is(tr.getSentence1())),
+                    hasProperty("sentence2", is(tr.getSentence2()))));
+        }
+
+        verify(lessonRepository).findOne(lessonId);
+        verify(translationRepository).findByLesson_LessonId(lessonId);
+        verifyNoMoreInteractions(repos);
+    }
+
+    private Translation translation(long id, String sent1, String sent2)
+    {
+        Translation tr = new Translation();
+        tr.setTranslationId(id);
+        tr.setSentence1(sent1);
+        tr.setSentence2(sent2);
+        return tr;
+    }
 }
+
+
+
+
+
+

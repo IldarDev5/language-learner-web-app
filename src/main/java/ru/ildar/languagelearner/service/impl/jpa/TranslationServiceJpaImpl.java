@@ -81,14 +81,8 @@ public class TranslationServiceJpaImpl implements TranslationService
 
         List<Translation> translations = translationRepository.findByLesson_LessonId(lessonId);
         List<TranslationDTO> translationDTOs = translations.stream()
-                .map((tr) ->
-                {
-                    TranslationDTO translation = new TranslationDTO();
-                    translation.setTranslationId(tr.getTranslationId());
-                    translation.setSentence1(tr.getSentence1());
-                    translation.setSentence2(tr.getSentence2());
-                    return translation;
-                })
+                .map((tr) -> new TranslationDTO(tr.getTranslationId(),
+                        tr.getSentence1(), tr.getSentence2()))
                 .collect(toList());
         exerciser.setCorrectTranslations(translationDTOs);
     }
