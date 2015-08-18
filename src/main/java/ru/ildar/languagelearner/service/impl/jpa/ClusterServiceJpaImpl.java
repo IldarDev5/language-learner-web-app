@@ -43,23 +43,27 @@ public class ClusterServiceJpaImpl implements ClusterService
             LanguageNotFoundException, ClusterAlreadyExistsException
     {
         if(clusterDTO.getLanguage1().equals(clusterDTO.getLanguage2()))
+            //Languages of a cluster mustn't be equal
         {
             throw new LanguagesAreEqualException();
         }
 
         Language l1 = languageRepository.findByDefaultName(clusterDTO.getLanguage1());
         if(l1 == null)
+            //The first language is not found in the database
         {
             throw new LanguageNotFoundException(1);
         }
 
         Language l2 = languageRepository.findByDefaultName(clusterDTO.getLanguage2());
         if(l2 == null)
+            //The second language is not found in the database
         {
             throw new LanguageNotFoundException(2);
         }
 
         if(clusterRepository.findByLanguagesAndUserNickname(l1, l2, nickname) != null)
+            //If there's already a cluster with such language pair
         {
             throw new ClusterAlreadyExistsException();
         }
@@ -121,6 +125,7 @@ public class ClusterServiceJpaImpl implements ClusterService
     {
         Cluster cluster = clusterRepository.findOne(clusterId);
         if(cluster == null || !cluster.getAppUser().getNickname().equals(nickname))
+            //Check if the cluster exists and belongs to this user
         {
             throw new ClusterNotOfThisUserException();
         }
@@ -134,6 +139,7 @@ public class ClusterServiceJpaImpl implements ClusterService
         Lesson lesson = lessonRepository.findOne(lessonId);
         Cluster cluster = lesson.getCluster();
         if(!cluster.getAppUser().getNickname().equals(userNickname))
+            //Check if the lesson belongs to this user
         {
             throw new LessonNotOfThisUserException();
         }

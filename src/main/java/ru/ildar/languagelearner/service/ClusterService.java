@@ -52,10 +52,18 @@ public interface ClusterService
      * Checks if the cluster specified by this ID is owner by the user specified by this nickname
      * @param clusterId ID of the cluster
      * @param nickname Nickname of the user
-     * @throws ClusterNotOfThisUserException If the cluster is non-existent or not of this user
      * @return Cluster specified by this name if the exception has not been thrown
+     * @throws ClusterNotOfThisUserException If the cluster is non-existent or not of this user
      */
     Cluster checkClusterOwner(long clusterId, String nickname);
 
+    /**
+     * Set the lesson specified by this ID to the exerciser object.
+     * The method checks that the lesson belongs to the user with this nickname.
+     * @param exerciser Exerciser object
+     * @param lessonId ID of the lesson to set
+     * @param userNickname Nickname of the user
+     * @throws LessonNotOfThisUserException If the lesson does not belong to this user
+     */
     void setLesson(Exerciser exerciser, Long lessonId, String userNickname);
 }

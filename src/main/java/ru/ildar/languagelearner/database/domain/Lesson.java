@@ -41,9 +41,11 @@ public class Lesson implements Serializable
     @Column(nullable = false)
     private Double sumGrade;
 
+    /** Translations list of this lesson */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lesson")
     private List<Translation> translations;
 
+    /** Count of translations that belong to this lesson */
     @Formula("(select count(*) from translation t where t.lesson_id = lesson_id)")
     private int translationsCount;
 

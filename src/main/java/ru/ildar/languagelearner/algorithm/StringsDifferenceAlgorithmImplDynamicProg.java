@@ -91,39 +91,39 @@ public class StringsDifferenceAlgorithmImplDynamicProg implements StringsDiffere
             int i = currEntry.getY();
             int j = currEntry.getX();
 
-            //If symbols at i and j are equals, no need here to modify anything, omit this situation
-            //if(modif[i][j].getModifOperation() != ModifOperation.SYMBOLS_EQUAL)
+            if(modif[i][j].getModifOperation() == ModifOperation.DELETE_ALL)
             {
-                if(modif[i][j].getModifOperation() == ModifOperation.DELETE_ALL)
-                {
-                    //Delete all symbol before and including this one
-                    IndexModification im = modifications.getOrDefault(i - 1, new IndexModification(i - 1));
-                    im.getModifications().add(0, modif[i][j]);
-                    modifications.put(i - 1, im);
+                //Delete all symbol before and including this one
+                IndexModification im = modifications.getOrDefault(i - 1, new IndexModification(i - 1));
+                im.getModifications().add(0, modif[i][j]);
+                modifications.put(i - 1, im);
 
-                    modificationsCount += (i - 1);
-                }
-                else if(modif[i][j].getModifOperation() == ModifOperation.INSERT_ALL)
-                {
-                    //Insert a number of symbols in the beginning of the string
-                    IndexModification im = modifications.getOrDefault(0, new IndexModification(0));
-                    im.getModifications().add(0, modif[i][j]);
-                    modifications.put(0, im);
-                    howMuchAdd = j;
+                modificationsCount += (i - 1);
+            }
+            else if(modif[i][j].getModifOperation() == ModifOperation.INSERT_ALL)
+            {
+                //Insert a number of symbols in the beginning of the string
+                IndexModification im = modifications.getOrDefault(0, new IndexModification(0));
+                im.getModifications().add(0, modif[i][j]);
+                modifications.put(0, im);
+                howMuchAdd = j;
 
-                    modificationsCount += howMuchAdd;
-                }
-                else
-                {
-                    //INSERT, REPLACE or DELETE operation
-                    IndexModification im = modifications.getOrDefault(i - 1, new IndexModification(i - 1));
-                    im.getModifications().add(0, modif[i][j]);
-                    modifications.put(i - 1, im);
+                modificationsCount += howMuchAdd;
+            }
+            else
+            {
+                /* INSERT, REPLACE, DELETE or SYMBOLS_EQUAL operation.
+                * We don't omit the SYMBOLS_EQUAL case so a user can construct the string wholly from
+                * the modifications list. If the user needs only "real" modifications, he can filter them
+                * himself.
+                * */
+                IndexModification im = modifications.getOrDefault(i - 1, new IndexModification(i - 1));
+                im.getModifications().add(0, modif[i][j]);
+                modifications.put(i - 1, im);
 
-                    if(modif[i][j].getModifOperation() != ModifOperation.SYMBOLS_EQUAL)
-                    {
-                        modificationsCount++;
-                    }
+                if(modif[i][j].getModifOperation() != ModifOperation.SYMBOLS_EQUAL)
+                {
+                    modificationsCount++;
                 }
             }
 
@@ -131,6 +131,8 @@ public class StringsDifferenceAlgorithmImplDynamicProg implements StringsDiffere
         }
         while(currEntry != null);
 
+        //Convert the map to set. The indexes are stored in the IndexModification objects
+        //so a user doesn't need key-value pairs with keys as indexes
         Set<IndexModification> set = new TreeSet<>(indexComparator());
         set.addAll(modifications.values());
         return new StringsDifference(sentence2, modificationsCount, set, howMuchAdd);

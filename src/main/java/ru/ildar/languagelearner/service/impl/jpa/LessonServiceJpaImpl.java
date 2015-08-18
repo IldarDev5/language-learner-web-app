@@ -40,6 +40,8 @@ public class LessonServiceJpaImpl implements LessonService
     @Transactional(readOnly = true)
     public List<Lesson> getLessonsForPage(Cluster cluster, int page)
     {
+        /*Find a lesson list from the specified page, but before then sort the query result by
+            the lesson add date field in descending order */
         Sort sort = new Sort(Sort.Direction.DESC, "addDate");
         PageRequest pageRequest = new PageRequest(page - 1, LESSONS_PER_PAGE, sort);
         return lessonRepository.findByCluster(cluster, pageRequest);
@@ -61,6 +63,7 @@ public class LessonServiceJpaImpl implements LessonService
         }
 
         if(!lesson.getCluster().getAppUser().getNickname().equals(nickname))
+            //Lesson doesn't belong to this user
         {
             throw new LessonNotOfThisUserException();
         }
@@ -90,6 +93,7 @@ public class LessonServiceJpaImpl implements LessonService
     {
         Lesson lesson = lessonRepository.findOne(lessonId);
         if(!lesson.getCluster().getAppUser().getNickname().equals(nickname))
+            //Lesson doesn't belong to this user
         {
             throw new LessonNotOfThisUserException();
         }

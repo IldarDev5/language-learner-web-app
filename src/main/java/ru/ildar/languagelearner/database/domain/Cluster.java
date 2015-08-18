@@ -36,6 +36,7 @@ public class Cluster implements Serializable
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastLessonAddDate;
 
+    /** Count of lessons that belong to this cluster */
     @Column(name = "lessons_count")
     private long lessonsCount;
 

@@ -98,6 +98,7 @@ public class TranslationServiceJpaImpl implements TranslationService
 
         Long count = lessonRepository.findTranslationsCount(lessonId);
         if(count == null)
+            //This means that the lesson is not found
         {
             throw new LessonNotFoundException(lessonId);
         }

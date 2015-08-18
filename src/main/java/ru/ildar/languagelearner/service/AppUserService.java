@@ -10,7 +10,7 @@ public interface AppUserService
     /**
      * Adds new user to the database
      * @param userDTO DTO object of a user to add
-     * @throws ru.ildar.languagelearner.exception.NicknameAlreadyExistsException thrown when entered nickname is duplicate
+     * @throws NicknameAlreadyExistsException thrown when entered nickname is duplicate
      * @throws EmailAlreadyExistsException thrown when entered E-Mail is duplicate
      * @return Newly appointed ID of this entity
      */

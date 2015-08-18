@@ -46,5 +46,13 @@ public interface LessonService
      */
     Lesson addLesson(Cluster cluster, LessonDTO lessonDTO);
 
+    /**
+     * Updates the sum exercise grade value of this lesson by adding this new value.
+     * The method checks if the lesson belongs to this user.
+     * @param lessonId ID of the lesson whose grade field to update
+     * @param grade Grade value
+     * @param nickname Nickname of the user
+     * @throws LessonNotOfThisUserException Lesson does not belong to this user
+     */
     void addTestGrade(long lessonId, double grade, String nickname);
 }
