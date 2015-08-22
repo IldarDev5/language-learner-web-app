@@ -4,15 +4,15 @@
     <title></title>
 </head>
 <body>
-    <div th:fragment="content">
+    <th:block th:fragment="content">
         <script type="text/javascript">
             function logout() {
                 $('#logoutForm').submit();
             }
         </script>
-        <div id="tooplate_menu">
+        <div id="menubar">
 
-            <ul>
+            <ul id="menu">
                 <li><a href="/mainPage">To Main Page</a></li>
                 <th:block sec:authorize="isAnonymous()">
                     <li><a href="/auth/login">Log In</a></li>
@@ -31,8 +31,7 @@
                 </th:block>
             </ul>
 
-            <div class="cleaner"></div>
         </div>
-    </div>
+    </th:block>
 </body>
 </html>
