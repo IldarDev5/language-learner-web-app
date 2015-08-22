@@ -42,7 +42,7 @@
                                     <th>Translation</th>
                                     <th>Info</th>
                                 </tr>
-                                <tr th:each="translation,trStat : *{translations}">
+                                <tr th:each="translation,trStat : *{translations}" class="transTr">
                                     <td><input type="text"
                                           th:field="*{translations[__${trStat.index}__].sentence1}" />
                                     </td>

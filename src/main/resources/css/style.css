@@ -320,7 +320,7 @@ table tr td
   color: #111;
   border-top: 1px solid #FFF;}
 
-tr input[type=text] {
+.transTr input[type=text] {
     width : 150px;
 }
 
