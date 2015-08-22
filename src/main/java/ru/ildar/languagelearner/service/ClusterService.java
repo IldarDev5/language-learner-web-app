@@ -41,8 +41,7 @@ public interface ClusterService
                         throws LanguageNotFoundException;
 
     /**
-     * Returns a pair of two arbitrary languages for which
-     * the cluster doesn't exist for this user.
+     * Returns a pair of two arbitrary languages for which the cluster doesn't exist for this user.
      * @param userNickname Nickname of the user whose cluster list is searched in
      * @return Such pair, if it exists; otherwise <code>null</code>
      */
@@ -66,4 +65,12 @@ public interface ClusterService
      * @throws LessonNotOfThisUserException If the lesson does not belong to this user
      */
     void setLesson(Exerciser exerciser, Long lessonId, String userNickname);
+
+    /**
+     * Deletes this cluster, checking if this cluster belongs to the user
+     * authorizing the Delete operation.
+     * @param cluster Cluster to delete
+     * @param username Username of the user
+     */
+    void deleteCluster(Cluster cluster, String username);
 }

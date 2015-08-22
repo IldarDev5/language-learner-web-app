@@ -3,6 +3,7 @@ package ru.ildar.languagelearner.database.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /** A list of lessons of a single user, bound by the sentences languages.
  * One cluster can have many lessons, defined for this language pair. */
@@ -39,6 +40,9 @@ public class Cluster implements Serializable
     /** Count of lessons that belong to this cluster */
     @Column(name = "lessons_count")
     private long lessonsCount;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cluster")
+    private List<Lesson> lessons;
 
     public Cluster() { }
     public Cluster(AppUser appUser)

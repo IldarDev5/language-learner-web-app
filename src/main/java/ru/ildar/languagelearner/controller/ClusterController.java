@@ -125,4 +125,11 @@ public class ClusterController
 
         return map;
     }
+
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    public String deleteCluster(@RequestParam("clusterId") Cluster cluster, Principal principal)
+    {
+        clusterService.deleteCluster(cluster, principal.getName());
+        return "redirect:/cluster/viewClusters";
+    }
 }

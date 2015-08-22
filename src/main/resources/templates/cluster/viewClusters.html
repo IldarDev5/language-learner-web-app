@@ -5,6 +5,23 @@
 </head>
 <body>
     <div tiles:fragment="content">
+        <script type="text/javascript">
+            function deleteCluster(clusterId) {
+                var answ = confirm("Are you sure you want to delete this cluster? " +
+                        "The information associated with it (lessons, translations) " +
+                        "will be lost.");
+
+                if(answ == true) {
+                    var deleteClsForm = $("#deleteClsForm");
+                    deleteClsForm.find("#clusterIdDeleteClsForm").val(clusterId);
+                    deleteClsForm.submit();
+                }
+            }
+        </script>
+        <form method="post" th:action="@{/cluster/delete}" hidden="hidden" id="deleteClsForm">
+            <input type="hidden" name="clusterId" id="clusterIdDeleteClsForm" />
+        </form>
+
         <h2>View clusters</h2>
         <table border="1">
             <tr>
@@ -12,6 +29,7 @@
                 <th>Language 2</th>
                 <th>View Info</th>
                 <th>View lessons</th>
+                <th>Delete</th>
             </tr>
             <!--@thymesVar id="clusters" type="java.util.List<ru.ildar.languagelearner.database.domain.Cluster>"-->
             <tr th:each="cls : ${clusters}" th:object="${cls}">
@@ -20,6 +38,10 @@
                 <td><a th:href="@{/cluster/viewCluster/__*{clusterId}__}">View info</a></td>
                 <td><a th:href="@{/lessons/viewLessons(clusterId=${cls.clusterId})}">
                     View lessons</a></td>
+                <td>
+                    <a th:href="'javascript:deleteCluster(\'' + *{clusterId} + '\');'"
+                       class="delete">Delete</a>
+                </td>
             </tr>
         </table>
     </div>

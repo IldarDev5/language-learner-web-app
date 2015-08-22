@@ -146,4 +146,16 @@ public class ClusterServiceJpaImpl implements ClusterService
 
         exerciser.setLesson(lesson);
     }
+
+    @Override
+    public void deleteCluster(Cluster cluster, String username)
+    {
+        //Check if this cluster belongs to the user authorizing the Delete operation
+        if(!cluster.getAppUser().getNickname().equals(username))
+        {
+            throw new ClusterNotOfThisUserException();
+        }
+
+        clusterRepository.delete(cluster);
+    }
 }
