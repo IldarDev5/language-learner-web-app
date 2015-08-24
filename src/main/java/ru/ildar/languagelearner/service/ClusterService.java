@@ -71,6 +71,7 @@ public interface ClusterService
      * authorizing the Delete operation.
      * @param cluster Cluster to delete
      * @param username Username of the user
+     * @throws ClusterNotOfThisUserException If the cluster doesn't belong to this user
      */
     void deleteCluster(Cluster cluster, String username);
 }

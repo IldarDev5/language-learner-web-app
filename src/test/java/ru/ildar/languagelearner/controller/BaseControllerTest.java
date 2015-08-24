@@ -12,14 +12,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ru.ildar.languagelearner.algorithm.StringsDifferenceAlgorithm;
-import ru.ildar.languagelearner.service.AppUserService;
-import ru.ildar.languagelearner.service.ClusterService;
-import ru.ildar.languagelearner.service.LanguageService;
-import ru.ildar.languagelearner.service.LessonService;
+import ru.ildar.languagelearner.service.*;
 
 import javax.servlet.Filter;
-import java.util.Arrays;
-import java.util.List;
 
 /** Base class for all controller test classes of this application */
 @RunWith(SpringJUnit4ClassRunner.class)
