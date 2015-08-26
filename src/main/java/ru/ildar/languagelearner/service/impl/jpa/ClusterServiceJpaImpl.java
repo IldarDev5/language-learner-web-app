@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ildar.languagelearner.controller.dto.ClusterDTO;
 import ru.ildar.languagelearner.controller.dto.LanguagePairDTO;
+import ru.ildar.languagelearner.controller.dto.PopularCluster;
 import ru.ildar.languagelearner.database.dao.ClusterRepository;
 import ru.ildar.languagelearner.database.dao.LanguageRepository;
 import ru.ildar.languagelearner.database.dao.LessonRepository;
@@ -18,6 +19,8 @@ import ru.ildar.languagelearner.service.AppUserService;
 import ru.ildar.languagelearner.service.ClusterService;
 
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service("clusterService")
 @Transactional
@@ -157,5 +160,15 @@ public class ClusterServiceJpaImpl implements ClusterService
         }
 
         clusterRepository.delete(cluster);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PopularCluster> getMostPopularClusters(int clustersToTake)
+    {
+        return clusterRepository.getMostPopularClusters(clustersToTake).stream()
+                .map((o) -> new PopularCluster(o[0].toString(),
+                        o[1].toString(), Integer.valueOf(o[2].toString())))
+                .collect(toList());
     }
 }

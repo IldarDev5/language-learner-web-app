@@ -2,6 +2,7 @@ package ru.ildar.languagelearner.service;
 
 import ru.ildar.languagelearner.controller.dto.ClusterDTO;
 import ru.ildar.languagelearner.controller.dto.LanguagePairDTO;
+import ru.ildar.languagelearner.controller.dto.PopularCluster;
 import ru.ildar.languagelearner.database.domain.Cluster;
 import ru.ildar.languagelearner.exception.*;
 import ru.ildar.languagelearner.exercise.Exerciser;
@@ -74,4 +75,6 @@ public interface ClusterService
      * @throws ClusterNotOfThisUserException If the cluster doesn't belong to this user
      */
     void deleteCluster(Cluster cluster, String username);
+
+    List<PopularCluster> getMostPopularClusters(int clustersToTake);
 }

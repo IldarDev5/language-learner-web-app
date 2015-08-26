@@ -45,12 +45,6 @@ public class WebConfig extends WebMvcConfigurerAdapter
         registry.addResourceHandler("/images/**").addResourceLocations("classpath:/images/");
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry)
-    {
-        registry.addViewController("/auth/login").setViewName("auth/login");
-    }
-
     @Bean
     public ThymeleafTilesConfigurer thymeleafTilesConfigurer()
     {

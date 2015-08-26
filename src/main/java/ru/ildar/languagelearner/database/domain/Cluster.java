@@ -1,5 +1,7 @@
 package ru.ildar.languagelearner.database.domain;
 
+import ru.ildar.languagelearner.controller.dto.PopularCluster;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;

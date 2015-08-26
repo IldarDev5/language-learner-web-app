@@ -1,11 +1,8 @@
 package ru.ildar.languagelearner.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,19 +16,25 @@ import ru.ildar.languagelearner.service.AppUserService;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/auth/registration")
+@RequestMapping("/auth")
 public class RegistrationController
 {
     @Autowired
     private AppUserService appUserService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String loginPage()
+    {
+        return "auth/login";
+    }
+
+    @RequestMapping(value = "registration", method = RequestMethod.GET)
     public ModelAndView registrationPage(UserDTO userDTO)
     {
         return new ModelAndView("auth/registration", "user", userDTO);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "registration", method = RequestMethod.POST)
     public ModelAndView registerUser(@ModelAttribute("user") @Valid UserDTO userDTO,
                                      BindingResult bindingResult,
                                      RedirectAttributes redirectAttributes)

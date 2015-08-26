@@ -36,7 +36,22 @@
                         people registered.</p>
                 </div>
 
-
+                <!--@thymesVar id="popularClusters" type="java.util.List<ru.ildar.languagelearner.controller.dto.PopularCluster>"-->
+                <!-- Second note - the most popular clusters among users -->
+                <img class="paperclip" src="/images/paperclip.png" alt="paperclip" />
+                <div class="sidebar">
+                    <h3>Clusters rating</h3>
+                    <p th:if="${popularClusters.size() != 0}">
+                        The most popular clusters among the users are the next:
+                        <ol>
+                            <li th:each="popCl : ${popularClusters}"
+                                th:text="|(${popCl.language1} => ${popCl.language2}) - ${popCl.count}|" ></li>
+                        </ol>
+                    </p>
+                    <p th:if="${popularClusters.size() == 0}">
+                        There are currently no clusters in the system.
+                    </p>
+                </div>
             </th:block>
 
             <th:block th:if="${#httpServletRequest.userPrincipal != null}">

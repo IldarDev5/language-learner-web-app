@@ -50,6 +50,18 @@ create trigger update_lessons_count_when_lesson_deleted_trigger
   execute procedure update_lessons_count_when_lesson_deleted();
 
 
+create or replace function get_top_popular_clusters(limit_count int)
+  returns table(language1 varchar, language2 varchar, count int8)
+as'
+  begin
+    return query
+    select language1_name as language1, language2_name as language2, count(*)
+    from "cluster"
+    group by language1_name, language2_name
+    order by count(*) desc
+    limit limit_count;
+  end;
+' LANGUAGE plpgsql;
 
 
 
