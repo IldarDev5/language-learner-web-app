@@ -32,4 +32,15 @@ public class CommonControllerAdvice
 
         return null;
     }
+
+    @ModelAttribute("registeredPeopleCount")
+    public Long registeredPeopleCount(Principal principal)
+    {
+        if(principal == null)
+        {
+            return appUserService.getTotalUsersCount();
+        }
+
+        return null;
+    }
 }

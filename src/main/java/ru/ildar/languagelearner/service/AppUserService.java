@@ -21,4 +21,7 @@ public interface AppUserService
      * Returns user by his nickname
      */
     AppUser getUserByNickname(String nickname);
+
+    /** Return count of all users registered */
+    long getTotalUsersCount();
 }

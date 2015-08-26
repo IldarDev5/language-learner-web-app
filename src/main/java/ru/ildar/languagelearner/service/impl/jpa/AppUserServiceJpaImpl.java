@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.ildar.languagelearner.controller.dto.UserDTO;
 import ru.ildar.languagelearner.database.dao.AppUserRepository;
 import ru.ildar.languagelearner.database.domain.AppUser;
@@ -16,7 +17,6 @@ import ru.ildar.languagelearner.exception.EmailAlreadyExistsException;
 import ru.ildar.languagelearner.exception.NicknameAlreadyExistsException;
 import ru.ildar.languagelearner.service.AppUserService;
 
-import javax.transaction.Transactional;
 import java.util.Arrays;
 
 @Service("appUserService")
@@ -34,6 +34,7 @@ public class AppUserServiceJpaImpl implements UserDetailsService, AppUserService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
         AppUser appUser = appUserRepository.findByNickname(username);
@@ -70,8 +71,16 @@ public class AppUserServiceJpaImpl implements UserDetailsService, AppUserService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public AppUser getUserByNickname(String nickname)
     {
         return appUserRepository.findByNickname(nickname);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long getTotalUsersCount()
+    {
+        return appUserRepository.count();
     }
 }

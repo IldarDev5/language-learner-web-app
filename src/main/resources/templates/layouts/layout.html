@@ -23,32 +23,26 @@
         </div>
     </div>
 
+    <!--@thymesVar id="registeredPeopleCount" type="java.lang.Long"-->
     <div id="site_content">
         <div id="sidebar_container">
-            <img class="paperclip" src="/images/paperclip.png" alt="paperclip" />
-            <div class="sidebar">
-                <!-- insert your sidebar items here -->
-                <h3>Latest News</h3>
-                <h4>What's the News?</h4>
-                <h5>1st July 2011</h5>
-                <p>Put your latest news item here, or anything else you would like in the sidebar!<br /><a href="#">Read more</a></p>
-            </div>
-            <img class="paperclip" src="/images/paperclip.png" alt="paperclip" />
-            <div class="sidebar">
-                <h3>Newsletter</h3>
-                <p>If you would like to receive our newletter, please enter your email address and click 'Subscribe'.</p>
-                <form method="post" action="#" id="subscribe">
-                    <p style="padding: 0 0 9px 0;"><input class="search" type="text" name="email_address" value="your email address" onclick="javascript: document.forms['subscribe'].email_address.value=''" /></p>
-                    <p><input class="subscribe" name="subscribe" type="submit" value="Subscribe" /></p>
-                </form>
-            </div>
-            <img class="paperclip" src="/images/paperclip.png" alt="paperclip" />
-            <div class="sidebar">
-                <h3>Latest Blog</h3>
-                <h4>Website Goes Live</h4>
-                <h5>1st July 2011</h5>
-                <p>We have just launched our new website. Take a look around, we'd love to know what you think.....<br /><a href="#">read more</a></p>
-            </div>
+
+            <th:block th:if="${#httpServletRequest.userPrincipal == null}">
+                <!-- First note - how many people are there registered on the website -->
+                <img class="paperclip" src="/images/paperclip.png" alt="paperclip" />
+                <div class="sidebar">
+                    <h3>People's count</h3>
+                    <p>There are currently <span th:text="${registeredPeopleCount}">30</span>
+                        people registered.</p>
+                </div>
+
+
+            </th:block>
+
+            <th:block th:if="${#httpServletRequest.userPrincipal != null}">
+
+            </th:block>
+
         </div>
         <div id="content">
             <div tiles:replace="content">
@@ -64,3 +58,12 @@
 </div>
 </body>
 </html>
+
+<!--<img class="paperclip" src="/images/paperclip.png" alt="paperclip" />-->
+<!--<div class="sidebar">-->
+    <!--&lt;!&ndash; insert your sidebar items here &ndash;&gt;-->
+    <!--<h3>Latest News</h3>-->
+    <!--<h4>What's the News?</h4>-->
+    <!--<h5>1st July 2011</h5>-->
+    <!--<p>Put your latest news item here, or anything else you would like in the sidebar!<br /><a href="#">Read more</a></p>-->
+<!--</div>-->
