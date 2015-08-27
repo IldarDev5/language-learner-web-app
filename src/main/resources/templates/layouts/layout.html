@@ -23,33 +23,45 @@
         </div>
     </div>
 
-    <!--@thymesVar id="registeredPeopleCount" type="java.lang.Long"-->
+    <!--@thymesVar id="notAuthUserData" type="java.util.Map<java.lang.String, java.lang.Object>"-->
     <div id="site_content">
-        <div id="sidebar_container">
+        <div id="sidebar_container" th:object="${notAuthUserData}">
 
             <th:block th:if="${#httpServletRequest.userPrincipal == null}">
                 <!-- First note - how many people are there registered on the website -->
                 <img class="paperclip" src="/images/paperclip.png" alt="paperclip" />
                 <div class="sidebar">
                     <h3>People's count</h3>
-                    <p>There are currently <span th:text="${registeredPeopleCount}">30</span>
+                    <p>There are currently <span th:text="*{registeredPeopleCount}">30</span>
                         people registered.</p>
                 </div>
 
-                <!--@thymesVar id="popularClusters" type="java.util.List<ru.ildar.languagelearner.controller.dto.PopularCluster>"-->
                 <!-- Second note - the most popular clusters among users -->
                 <img class="paperclip" src="/images/paperclip.png" alt="paperclip" />
                 <div class="sidebar">
-                    <h3>Clusters rating</h3>
-                    <p th:if="${popularClusters.size() != 0}">
+                    <h3>Popular clusters</h3>
+                    <p th:if="*{popularClusters.size() != 0}">
                         The most popular clusters among the users are the next:
                         <ol>
-                            <li th:each="popCl : ${popularClusters}"
+                            <li th:each="popCl : *{popularClusters}"
                                 th:text="|(${popCl.language1} => ${popCl.language2}) - ${popCl.count}|" ></li>
                         </ol>
                     </p>
-                    <p th:if="${popularClusters.size() == 0}">
+                    <p th:if="*{popularClusters.size() == 0}">
                         There are currently no clusters in the system.
+                    </p>
+                </div>
+
+                <!-- The third node - the average count of lessons in clusters -->
+                <img class="paperclip" src="/images/paperclip.png" alt="paperclip" />
+                <div class="sidebar">
+                    <h3>Lessons in clusters</h3>
+                    <p>
+                        The average count of lessons in clusters:
+                        <ol>
+                            <li th:each="cls : *{clusterLessonInfos}"
+                                th:text="|(${cls.language1} => ${cls.language2}) - ${cls.count}|" ></li>
+                        </ol>
                     </p>
                 </div>
             </th:block>

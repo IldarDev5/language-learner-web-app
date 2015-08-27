@@ -20,4 +20,7 @@ public interface ClusterRepository extends CrudRepository<Cluster, Long>
 
     @Query(value = "select * from get_top_popular_clusters(?1)", nativeQuery = true)
     List<Object[]> getMostPopularClusters(int countToTake);
+
+    @Query(value = "select * from get_avg_lessons_count_of_clusters(?1)", nativeQuery = true)
+    List<Object[]> getAvgLessonsCountOfClusters(int clustersToTake);
 }

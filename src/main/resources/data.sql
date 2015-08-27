@@ -50,6 +50,7 @@ create trigger update_lessons_count_when_lesson_deleted_trigger
   execute procedure update_lessons_count_when_lesson_deleted();
 
 
+--Returns first limit_count of the top popular cluster definitions among users
 create or replace function get_top_popular_clusters(limit_count int)
   returns table(language1 varchar, language2 varchar, count int8)
 as'
@@ -64,6 +65,19 @@ as'
 ' LANGUAGE plpgsql;
 
 
-
+--Returns first limit_count of the cluster definitions with the biggest
+--average count of lessons
+create or replace function get_avg_lessons_count_of_clusters(limit_count int)
+  returns table(language1 varchar, language2 varchar, count numeric(10, 2))
+as'
+  begin
+    return query
+    select language1_name as language1, language2_name as language2, avg(lessons_count)
+    from "cluster"
+    group by language1_name, language2_name
+    order by avg(lessons_count) desc
+    limit limit_count;
+  end;
+' LANGUAGE plpgsql;
 
 

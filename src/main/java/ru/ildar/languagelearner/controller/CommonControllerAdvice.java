@@ -11,7 +11,9 @@ import ru.ildar.languagelearner.service.AppUserService;
 import ru.ildar.languagelearner.service.ClusterService;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @ControllerAdvice
 public class CommonControllerAdvice
@@ -40,23 +42,16 @@ public class CommonControllerAdvice
         return null;
     }
 
-    @ModelAttribute("registeredPeopleCount")
-    public Long registeredPeopleCount(Principal principal)
+    @ModelAttribute("notAuthUserData")
+    public Map<String, Object> dataForNotAuthUsers(Principal principal)
     {
         if(principal == null)
         {
-            return appUserService.getTotalUsersCount();
-        }
-
-        return null;
-    }
-
-    @ModelAttribute("popularClusters")
-    public List<PopularCluster> popularClusters(Principal principal)
-    {
-        if(principal == null)
-        {
-            return clusterService.getMostPopularClusters(CLUSTERS_TO_TAKE);
+            Map<String, Object> map = new HashMap<>();
+            map.put("registeredPeopleCount", appUserService.getTotalUsersCount());
+            map.put("popularClusters", clusterService.getMostPopularClusters(CLUSTERS_TO_TAKE));
+            map.put("clusterLessonInfos", clusterService.getAvgLessonsCountOfClusters(CLUSTERS_TO_TAKE));
+            return map;
         }
 
         return null;

@@ -76,5 +76,17 @@ public interface ClusterService
      */
     void deleteCluster(Cluster cluster, String username);
 
-    List<PopularCluster> getMostPopularClusters(int clustersToTake);
+    /**
+     * Returns the most popular clusters. The most popular cluster is the one that is defined
+     * most often among users.
+     * @param clustersToTake How many results to return
+     */
+    List<PopularCluster<Long>> getMostPopularClusters(int clustersToTake);
+
+    /**
+     * Returns average count of lessons per cluster(that is, per language pair)
+     * and sorts them by count in descending order, returning only some of the top ones.
+     * @param clustersToTake How many results to return
+     */
+    List<PopularCluster<Double>> getAvgLessonsCountOfClusters(int clustersToTake);
 }

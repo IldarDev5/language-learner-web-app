@@ -164,11 +164,20 @@ public class ClusterServiceJpaImpl implements ClusterService
 
     @Override
     @Transactional(readOnly = true)
-    public List<PopularCluster> getMostPopularClusters(int clustersToTake)
+    public List<PopularCluster<Long>> getMostPopularClusters(int clustersToTake)
     {
         return clusterRepository.getMostPopularClusters(clustersToTake).stream()
-                .map((o) -> new PopularCluster(o[0].toString(),
-                        o[1].toString(), Integer.valueOf(o[2].toString())))
+                .map((o) -> new String[]{o[0].toString(), o[1].toString(), o[2].toString()})
+                .map((o) -> new PopularCluster<>(o[0], o[1], Long.valueOf(o[2])))
+                .collect(toList());
+    }
+
+    @Override
+    public List<PopularCluster<Double>> getAvgLessonsCountOfClusters(int clustersToTake)
+    {
+        return clusterRepository.getAvgLessonsCountOfClusters(clustersToTake).stream()
+                .map((o) -> new String[]{o[0].toString(), o[1].toString(), o[2].toString()})
+                .map((o) -> new PopularCluster<>(o[0], o[1], Double.valueOf(o[2])))
                 .collect(toList());
     }
 }
