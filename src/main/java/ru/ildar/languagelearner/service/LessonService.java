@@ -55,4 +55,6 @@ public interface LessonService
      * @throws LessonNotOfThisUserException Lesson does not belong to this user
      */
     void addTestGrade(long lessonId, double grade, String nickname);
+
+    Iterable<Lesson> getLessonsNotTakenLongestTime(int lessonsToTake, String username);
 }

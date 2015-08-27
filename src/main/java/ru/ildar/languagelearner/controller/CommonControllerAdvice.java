@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.ildar.languagelearner.controller.dto.PopularCluster;
 import ru.ildar.languagelearner.service.AppUserService;
 import ru.ildar.languagelearner.service.ClusterService;
+import ru.ildar.languagelearner.service.LessonService;
 
 import java.security.Principal;
 import java.util.HashMap;
@@ -21,9 +22,7 @@ public class CommonControllerAdvice
     @Autowired
     private AppUserService appUserService;
     @Autowired
-    private ClusterService clusterService;
-
-    private static final int CLUSTERS_TO_TAKE = 5;
+    private UserDataMaps userDataMaps;
 
     @InitBinder
     public void initBinder(WebDataBinder binder)
@@ -47,11 +46,18 @@ public class CommonControllerAdvice
     {
         if(principal == null)
         {
-            Map<String, Object> map = new HashMap<>();
-            map.put("registeredPeopleCount", appUserService.getTotalUsersCount());
-            map.put("popularClusters", clusterService.getMostPopularClusters(CLUSTERS_TO_TAKE));
-            map.put("clusterLessonInfos", clusterService.getAvgLessonsCountOfClusters(CLUSTERS_TO_TAKE));
-            return map;
+            return userDataMaps.getNonAuthUserData();
+        }
+
+        return null;
+    }
+
+    @ModelAttribute("authUserData")
+    public Map<String, Object> dataForAuthUsers(Principal principal)
+    {
+        if(principal != null)
+        {
+            return userDataMaps.getAuthUserData(principal);
         }
 
         return null;

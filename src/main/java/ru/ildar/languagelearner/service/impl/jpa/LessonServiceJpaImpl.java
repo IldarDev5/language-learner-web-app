@@ -13,6 +13,7 @@ import ru.ildar.languagelearner.service.LessonService;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service("lessonService")
@@ -100,5 +101,14 @@ public class LessonServiceJpaImpl implements LessonService
 
         lesson.setSumGrade(lesson.getSumGrade() + grade);
         lesson.setTimesLessonTaken(lesson.getTimesLessonTaken() + 1);
+        lesson.setLastTaken(new Date());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Iterable<Lesson> getLessonsNotTakenLongestTime(int lessonsToTake, String username)
+    {
+        PageRequest pageRequest = new PageRequest(0, lessonsToTake);
+        return lessonRepository.findLessonsNotTakenLongestTime(username, pageRequest);
     }
 }

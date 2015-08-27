@@ -25,9 +25,9 @@
 
     <!--@thymesVar id="notAuthUserData" type="java.util.Map<java.lang.String, java.lang.Object>"-->
     <div id="site_content">
-        <div id="sidebar_container" th:object="${notAuthUserData}">
+        <div id="sidebar_container">
 
-            <th:block th:if="${#httpServletRequest.userPrincipal == null}">
+            <th:block th:if="${#httpServletRequest.userPrincipal == null}" th:object="${notAuthUserData}">
                 <!-- First note - how many people are there registered on the website -->
                 <img class="paperclip" src="/images/paperclip.png" alt="paperclip" />
                 <div class="sidebar">
@@ -66,8 +66,36 @@
                 </div>
             </th:block>
 
-            <th:block th:if="${#httpServletRequest.userPrincipal != null}">
+            <!--@thymesVar id="authUserData" type="java.util.Map<java.lang.String, java.lang.Object>"-->
+            <th:block th:if="${#httpServletRequest.userPrincipal != null}" th:object="${authUserData}">
+                <!-- The user's lessons that weren't taken for the longest time -->
+                <img class="paperclip" src="/images/paperclip.png" alt="paperclip" />
+                <div class="sidebar">
+                    <h3>Forsaken lessons</h3>
+                    <p>
+                        The lessons that you haven't taken for the longest time:
+                    <ol>
+                        <li th:each="lesson : *{lessonsForsaken}">
+                            <a th:href="@{/doExercise(lessonId=${lesson.lessonId})}"
+                               th:text="${lesson.lessonName}">
+                                The First lesson
+                            </a>
+                            <th:block th:if="${#dates.format(lesson.lastTaken, 'yyyy') == '0001'}">
+                                Never taken
+                            </th:block>
+                            <th:block th:if="${#dates.format(lesson.lastTaken, 'yyyy') != '0001'}">
+                                - since
+                                <th:block
+                                        th:text="${#dates.format(lesson.lastTaken, 'dd/MM/yyyy hh:mm')}">
+                                    13/10/2015 10:20
+                                </th:block>
+                            </th:block>
+                        </li>
+                    </ol>
+                    </p>
+                </div>
 
+                <!-- The user's lessons that have the smallest average grade -->
             </th:block>
 
         </div>

@@ -7,10 +7,12 @@
 
     <var class="ru.ildar.languagelearner.controller.dto.ExerciseConfigDTO" name="configDTO" />
     <var class="ru.ildar.languagelearner.exercise.Exerciser" name="exerciser" />
+    <var name="authUserData" class="java.util.HashMap" />
     <input name="lessonId" type="java.lang.Long" />
 
     <on-start>
         <set name="exerciser" value="userExerciser" />
+        <set name="authUserData" value="userDataMaps.getAuthUserData(currentUser)" />
         <evaluate expression="exerciser.resetExerciser()" />
         <evaluate expression="clusterService.setLesson(exerciser, lessonId, currentUser.name)" />
         <evaluate expression="translationService.setTranslationsCount(exerciser, lessonId)" />

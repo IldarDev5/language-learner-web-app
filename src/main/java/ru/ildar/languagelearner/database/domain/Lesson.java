@@ -4,6 +4,8 @@ import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class Lesson implements Serializable
     @Column(length = 300)
     private String description;
 
-    /** Lessons cluster this lesson pertains to */
+    /** The cluster this lesson pertains to */
     @ManyToOne
     @JoinColumn(name = "cluster_id", nullable = false)
     private Cluster cluster;
@@ -45,6 +47,11 @@ public class Lesson implements Serializable
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lesson")
     private List<Translation> translations;
 
+    /** Date when this lesson was last taken by user as an exercise */
+    @Column(name = "last_taken", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastTaken;
+
     /** Count of translations that belong to this lesson */
     @Formula("(select count(*) from translation t where t.lesson_id = lesson_id)")
     private int translationsCount;
@@ -56,11 +63,12 @@ public class Lesson implements Serializable
     }
 
     @PrePersist
-    public void prePersist()
+    public void prePersist() throws ParseException
     {
         addDate = new Date();
         timesLessonTaken = 0;
         sumGrade = 0.0;
+        lastTaken = new SimpleDateFormat("yyyy").parse("0000");
     }
 
     public double averageGrade()
@@ -151,5 +159,15 @@ public class Lesson implements Serializable
     public void setSumGrade(Double sumGrade)
     {
         this.sumGrade = sumGrade;
+    }
+
+    public Date getLastTaken()
+    {
+        return lastTaken;
+    }
+
+    public void setLastTaken(Date lastTaken)
+    {
+        this.lastTaken = lastTaken;
     }
 }
