@@ -57,7 +57,7 @@
                 <div class="sidebar">
                     <h3>Lessons in clusters</h3>
                     <p>
-                        The average count of lessons in clusters:
+                        The average count of lessons in clusters among users:
                         <ol>
                             <li th:each="cls : *{clusterLessonInfos}"
                                 th:text="|(${cls.language1} => ${cls.language2}) - ${cls.count}|" ></li>
@@ -80,8 +80,9 @@
                                th:text="${lesson.lessonName}">
                                 The First lesson
                             </a>
+                            <h4 th:text="|Cluster ${lesson.cluster.language1.defaultName} => ${lesson.cluster.language2.defaultName}|"></h4>
                             <th:block th:if="${#dates.format(lesson.lastTaken, 'yyyy') == '0001'}">
-                                Never taken
+                                - never taken
                             </th:block>
                             <th:block th:if="${#dates.format(lesson.lastTaken, 'yyyy') != '0001'}">
                                 - since
