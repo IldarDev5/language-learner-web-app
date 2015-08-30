@@ -1,0 +1,30 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title tiles:fragment="title">Show Lesson</title>
+</head>
+<body>
+    <div tiles:fragment="content">
+        <h2>Show the sentences of the lesson before exercising</h2>
+        <table th:with="invertLangs=${exerciser.config.invertLanguages}">
+            <tr th:with="cl=${exerciser.lesson.cluster}">
+                <th th:text="|Sentence in ${invertLangs ? cl.language2.defaultName : cl.language1.defaultName}|">
+                    Sentence in English
+                </th>
+                <th th:text="|Sentence in ${invertLangs ? cl.language1.defaultName : cl.language2.defaultName}|">
+                    Sentence in Russian
+                </th>
+            </tr>
+            <!--@thymesVar id="exerciser" type="ru.ildar.languagelearner.exercise.Exerciser"-->
+            <tr th:each="translation : ${exerciser.correctTranslations}">
+                <td th:text="${invertLangs ? translation.sentence2 : translation.sentence1}">Hello</td>
+                <td th:text="${invertLangs ? translation.sentence1 : translation.sentence2}">Привет</td>
+            </tr>
+        </table>
+        <form method="post" th:action="${flowExecutionUrl}">
+            <input type="submit" name="_eventId_startExercise" value="Start exercise" />
+            <input type="submit" name="_eventId_cancel" value="Cancel" />
+        </form>
+    </div>
+</body>
+</html>

@@ -19,10 +19,20 @@
     </on-start>
 
     <view-state id="setExerciseConfig" view="exercise/config" model="configDTO">
-        <transition on="submitConfig" to="continueExercise">
+        <transition on="submitConfig" to="checkShowListOfTranslations">
             <evaluate expression="exerciser.setConfig(configDTO)" />
             <evaluate expression="translationService.fillExerciser(lessonId, exerciser, currentUser.name)" />
         </transition>
+        <transition on="cancel" to="cancel" />
+    </view-state>
+
+    <decision-state id="checkShowListOfTranslations">
+        <if test="configDTO.isShowLessonBeforeExercise()" then="showLessonBeforeExercise"
+            else="continueExercise" />
+    </decision-state>
+
+    <view-state id="showLessonBeforeExercise" view="exercise/showLesson" model="exerciser">
+        <transition on="startExercise" to="continueExercise" />
         <transition on="cancel" to="cancel" />
     </view-state>
 

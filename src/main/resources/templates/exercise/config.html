@@ -22,6 +22,9 @@
                 <input type="checkbox" th:field="*{uniqueQuestions}" />
                 <span>Allow only unique questions in the test</span><br />
 
+                <input type="checkbox" th:field="*{showLessonBeforeExercise}" />
+                <span>Show the list of sentence pairs of the lesson before starting the exercise</span><br />
+
                 <input type="checkbox" th:field="*{invertLanguages}" />
                 <!--@thymesVar id="exerciser" type="ru.ildar.languagelearner.exercise.Exerciser"-->
                 <span th:text="|Make primary language
