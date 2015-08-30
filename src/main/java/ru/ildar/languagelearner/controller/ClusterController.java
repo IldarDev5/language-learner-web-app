@@ -31,8 +31,6 @@ public class ClusterController
     private ClusterService clusterService;
     @Autowired
     private LanguageService languageService;
-    @Autowired
-    private LessonService lessonService;
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public ModelAndView createClusterPage(ClusterDTO clusterDTO, ModelMap model, Principal principal)

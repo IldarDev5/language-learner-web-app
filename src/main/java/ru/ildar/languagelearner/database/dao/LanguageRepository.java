@@ -10,7 +10,7 @@ import java.util.List;
 public interface LanguageRepository extends CrudRepository<Language, String>
 {
     @Query("select l.defaultName from Language l")
-    List<String> findAllGetLanguagesNames();
+    List<String> getLanguagesNames();
 
     Language findByDefaultName(String language);
 

@@ -11,6 +11,9 @@ import java.util.List;
 
 /** Lesson in a cluster - contains pairs "sentence-translation" in cluster defined languages. */
 @Entity
+@Table(
+        indexes = { @Index(name = "lesson_cluster_id_idx", columnList = "cluster_id") }
+)
 public class Lesson implements Serializable
 {
     /** Lesson's primary key */

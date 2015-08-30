@@ -5,9 +5,9 @@ import java.io.Serializable;
 
 /** Pair of sentences. One sentence is the translation of another sentence in its language. */
 @Entity
-@Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"lesson_id", "sentence1", "sentence2"})
-})
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"lesson_id", "sentence1", "sentence2"}) },
+        indexes = { @Index(name = "translation_lesson_id_idx", columnList = "lesson_id") }
+)
 public class Translation implements Serializable
 {
     /** Entity's primary key */

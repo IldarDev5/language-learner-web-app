@@ -11,8 +11,9 @@ import java.util.List;
  * One cluster can have many lessons, defined for this language pair. */
 @Entity
 @Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"language1_name", "language2_name", "user_id"})
-})
+        @UniqueConstraint(columnNames = {"language1_name", "language2_name", "user_id"})},
+        indexes = { @Index(name = "cluster_user_id_idx", columnList = "user_id") }
+)
 public class Cluster implements Serializable
 {
     /** Entity's primary key */

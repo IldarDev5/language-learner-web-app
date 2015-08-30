@@ -6,6 +6,12 @@ import java.io.Serializable;
 /**
  * Entity that stores credentials and other information about application user */
 @Entity
+@Table(
+        indexes = {
+                @Index(name = "user_nickname_idx", columnList = "nickname"),
+                @Index(name = "user_email_idx", columnList = "email")
+        }
+)
 public class AppUser implements Serializable
 {
     /** User's primary key */
