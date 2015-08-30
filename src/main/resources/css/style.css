@@ -123,6 +123,13 @@ ol li
   font: 500% 'tangerine', arial;
   color: #111;}
 
+#greeting {
+  float : left;
+  padding: 20px 0 0 20px;
+  font-family: Tahoma, serif;
+  font-size: 16px;
+}
+
 #menubar
 { height: 46px;
   width: 700px;

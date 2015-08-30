@@ -21,6 +21,14 @@
         <div th:replace="layouts/menu :: content">
             Menu
         </div>
+
+        <!--@thymesVar id="userFirstName" type="java.lang.String"-->
+        <div sec:authorize="isAuthenticated()" id="greeting" th:switch="${userFirstName}">
+            <th:block th:case="${null}"
+                      th:text="|Welcome, ${#httpServletRequest.userPrincipal.name}!|" />
+            <th:block th:case="*"
+                      th:text="|Welcome, ${userFirstName}!|" />
+        </div>
     </div>
 
     <!--@thymesVar id="notAuthUserData" type="java.util.Map<java.lang.String, java.lang.Object>"-->
