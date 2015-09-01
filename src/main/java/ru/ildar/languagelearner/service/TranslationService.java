@@ -1,5 +1,6 @@
 package ru.ildar.languagelearner.service;
 
+import ru.ildar.languagelearner.controller.dto.PageRetrievalResult;
 import ru.ildar.languagelearner.database.domain.Translation;
 import ru.ildar.languagelearner.exercise.Exerciser;
 import ru.ildar.languagelearner.controller.dto.TranslationDTO;
@@ -46,4 +47,14 @@ public interface TranslationService
      * Returns the translation specified by this ID
      */
     Translation getTranslation(long translationId);
+
+    /**
+     * Find translation pairs by this search query. Returning translations must have this search string
+     * present either in the main sentence, or in its translation.<br />
+     * Search query will be used in the lower case, search is made ignorant to the case of letters.
+     * @param searchQuery String to search translation pairs by
+     * @param username The name of the user whose translation pairs to search
+     * @param page Page of the returning data
+     */
+    PageRetrievalResult<Translation> searchTranslations(String searchQuery, String username, int page);
 }

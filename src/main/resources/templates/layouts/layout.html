@@ -22,6 +22,13 @@
             Menu
         </div>
 
+        <div id="search">
+            <form method="get" th:action="@{/search}">
+                <input type="text" name="searchText" placeholder="Search" />
+                <input type="submit" value="Search" />
+            </form>
+        </div>
+
         <!--@thymesVar id="userFirstName" type="java.lang.String"-->
         <div sec:authorize="isAuthenticated()" id="greeting" th:switch="${userFirstName}">
             <th:block th:case="${null}"

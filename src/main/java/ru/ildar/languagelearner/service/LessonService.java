@@ -1,6 +1,7 @@
 package ru.ildar.languagelearner.service;
 
 import ru.ildar.languagelearner.controller.dto.LessonDTO;
+import ru.ildar.languagelearner.controller.dto.PageRetrievalResult;
 import ru.ildar.languagelearner.database.domain.Cluster;
 import ru.ildar.languagelearner.database.domain.Lesson;
 import ru.ildar.languagelearner.exception.*;
@@ -57,4 +58,14 @@ public interface LessonService
     void addTestGrade(long lessonId, double grade, String nickname);
 
     Iterable<Lesson> getLessonsNotTakenLongestTime(int lessonsToTake, String username);
+
+    /**
+     * Find lessons by this search query. Returning lessons must have this search string
+     * present either in a name, or in a description of lesson.<br />
+     * Search query will be used in the lower case, search is made ignorant to the case of letters.
+     * @param searchQuery String to search lessons by
+     * @param username The name of the user whose lessons to search
+     * @param page Page of the returning data
+     */
+    PageRetrievalResult<Lesson> searchLessons(String searchQuery, String username, int page);
 }

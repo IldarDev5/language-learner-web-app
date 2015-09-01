@@ -35,8 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .usernameParameter("username").passwordParameter("password")
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/mainPage")
                 .and().authorizeRequests()
-                        .antMatchers("/cluster/**").access("hasRole('ROLE_USER')")
-                        .antMatchers("/lessons/**").access("hasRole('ROLE_USER')");
+                        .antMatchers("/cluster/**", "/lessons/**", "/search/**")
+                            .access("hasRole('ROLE_USER')");
     }
 
     @Bean

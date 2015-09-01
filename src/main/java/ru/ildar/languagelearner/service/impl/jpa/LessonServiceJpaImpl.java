@@ -1,10 +1,12 @@
 package ru.ildar.languagelearner.service.impl.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ildar.languagelearner.controller.dto.LessonDTO;
+import ru.ildar.languagelearner.controller.dto.PageRetrievalResult;
 import ru.ildar.languagelearner.database.dao.LessonRepository;
 import ru.ildar.languagelearner.database.domain.Cluster;
 import ru.ildar.languagelearner.database.domain.Lesson;
@@ -49,6 +51,7 @@ public class LessonServiceJpaImpl implements LessonService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int totalLessonPages()
     {
         long c = lessonRepository.count();
@@ -73,6 +76,7 @@ public class LessonServiceJpaImpl implements LessonService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Lesson getLessonById(long lessonId)
     {
         return lessonRepository.findOne(lessonId);
@@ -110,5 +114,16 @@ public class LessonServiceJpaImpl implements LessonService
     {
         PageRequest pageRequest = new PageRequest(0, lessonsToTake);
         return lessonRepository.findLessonsNotTakenLongestTime(username, pageRequest);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PageRetrievalResult<Lesson> searchLessons(String searchQuery, String username, int page)
+    {
+        PageRequest pageRequest = new PageRequest(page, LESSONS_PER_PAGE);
+        Page<Lesson> lessons = lessonRepository.searchLessonsOfUser(searchQuery.toLowerCase(),
+                username, pageRequest);
+
+        return new PageRetrievalResult<>(lessons.getContent(), lessons.getTotalPages());
     }
 }

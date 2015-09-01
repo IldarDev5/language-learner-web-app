@@ -1,0 +1,22 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title tiles:fragment="title">Search results</title>
+</head>
+<body>
+    <div tiles:fragment="content">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/scripts/search.js"></script>
+
+        <h2>Search Results</h2>
+        <!--@thymesVar id="searchQuery" type="java.lang.String"-->
+        <h3>Your search query was " <span th:text="${searchQuery}"></span>"</h3>
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="javascript:searchLessons();">Lessons</a></li>
+            <li><a href="javascript:searchTranslations();">Translation pairs</a></li>
+        </ul>
+    </div>
+</body>
+</html>
