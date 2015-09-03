@@ -22,7 +22,7 @@
             Menu
         </div>
 
-        <div id="search">
+        <div sec:authorize="isAuthenticated()" id="search">
             <form method="get" th:action="@{/search}">
                 <input type="text" name="searchText" placeholder="Search" />
                 <input type="submit" value="Search" />
