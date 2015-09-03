@@ -19,7 +19,9 @@
         </div>
 
         <div id="results">
-            Results are to be here
+            <!--@thymesVar id="retrievalResult" type="ru.ildar.languagelearner.controller.dto.PageRetrievalResult"-->
+            <th:block th:include="layouts/lesson :: content" th:with="lessons=${retrievalResult.content}" />
+            <i th:if="${retrievalResult.content.size() == 0}"><br />No lessons found</i>
         </div>
     </div>
 </body>

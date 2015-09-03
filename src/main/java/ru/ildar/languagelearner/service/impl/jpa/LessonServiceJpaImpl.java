@@ -120,7 +120,7 @@ public class LessonServiceJpaImpl implements LessonService
     @Transactional(readOnly = true)
     public PageRetrievalResult<Lesson> searchLessons(String searchQuery, String username, int page)
     {
-        PageRequest pageRequest = new PageRequest(page, LESSONS_PER_PAGE);
+        PageRequest pageRequest = new PageRequest(page - 1, LESSONS_PER_PAGE);
         Page<Lesson> lessons = lessonRepository.searchLessonsOfUser(searchQuery.toLowerCase(),
                 username, pageRequest);
 
