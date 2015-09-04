@@ -21,7 +21,6 @@ import java.util.Arrays;
 @Configuration
 public class WebFlowConfig extends AbstractFlowConfiguration
 {
-
     @Autowired
     private ViewResolver viewResolver;
 

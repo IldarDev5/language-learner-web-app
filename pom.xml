@@ -21,8 +21,9 @@
       <jstl.version>1.2</jstl.version>
       <jwebunit.version>3.1</jwebunit.version>
       <spring-security.version>4.0.2.RELEASE</spring-security.version>
+      <dbcp.version>2.0.1</dbcp.version>
 
-      <spring.datasource.url>jdbc:postgresql://OPENSHIFT_POSTGRESQL_DB_HOST:OPENSHIFT_POSTGRESQL_DB_PORT/OPENSHIFT_APP_NAME</spring.datasource.url>
+      <spring.datasource.url>OPENSHIFT_POSTGRESQL_DB_URL</spring.datasource.url>
       <spring.datasource.username>OPENSHIFT_POSTGRESQL_DB_USERNAME</spring.datasource.username>
       <spring.datasource.password>OPENSHIFT_POSTGRESQL_DB_PASSWORD</spring.datasource.password>
   </properties>
@@ -169,6 +170,12 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <version>${spring-security.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>${dbcp.version}</version>
         </dependency>
 
     </dependencies>
