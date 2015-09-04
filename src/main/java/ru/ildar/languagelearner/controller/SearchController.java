@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import ru.ildar.languagelearner.controller.dto.LessonDTO;
 import ru.ildar.languagelearner.controller.dto.PageRetrievalResult;
 import ru.ildar.languagelearner.database.domain.Lesson;
 import ru.ildar.languagelearner.database.domain.Translation;
 import ru.ildar.languagelearner.service.LessonService;
 import ru.ildar.languagelearner.service.TranslationService;
 
+import javax.ws.rs.core.MediaType;
 import java.security.Principal;
 
 @Controller
@@ -33,14 +35,15 @@ public class SearchController
         if(page == null)
             page = 1;
 
-        PageRetrievalResult<Lesson> retrievalResult = searchLessonInfo(searchText, page, principal);
+        PageRetrievalResult<LessonDTO> retrievalResult = searchLessonInfo(searchText, page, principal);
         model.addAttribute("searchQuery", searchText);
         return new ModelAndView("search/searchResults", "retrievalResult", retrievalResult);
     }
 
-    @RequestMapping(value = "lessonInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "lessonInfo", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON)
     @ResponseBody
-    public PageRetrievalResult<Lesson> searchLessonInfo(@RequestParam("searchText") String searchText,
+    public PageRetrievalResult<LessonDTO> searchLessonInfo(@RequestParam("searchText") String searchText,
                                          @RequestParam("page") int page,
                                          Principal principal)
     {

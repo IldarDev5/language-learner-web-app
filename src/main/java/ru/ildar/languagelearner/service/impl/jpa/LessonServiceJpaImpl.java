@@ -15,8 +15,11 @@ import ru.ildar.languagelearner.service.LessonService;
 
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service("lessonService")
 @Transactional
@@ -118,12 +121,17 @@ public class LessonServiceJpaImpl implements LessonService
 
     @Override
     @Transactional(readOnly = true)
-    public PageRetrievalResult<Lesson> searchLessons(String searchQuery, String username, int page)
+    public PageRetrievalResult<LessonDTO> searchLessons(String searchQuery, String username, int page)
     {
         PageRequest pageRequest = new PageRequest(page - 1, LESSONS_PER_PAGE);
         Page<Lesson> lessons = lessonRepository.searchLessonsOfUser(searchQuery.toLowerCase(),
                 username, pageRequest);
 
-        return new PageRetrievalResult<>(lessons.getContent(), lessons.getTotalPages());
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        return new PageRetrievalResult<>(lessons.getContent().stream().map((l) ->
+                new LessonDTO(l.getLessonId(), l.getLessonName(),
+                              l.getDescription(), l.averageGrade(), fmt.format(l.getAddDate()),
+                              l.getAddDate(), l.getTranslationsCount())).collect(toList()),
+                lessons.getTotalPages());
     }
 }

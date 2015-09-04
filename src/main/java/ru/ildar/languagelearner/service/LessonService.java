@@ -67,5 +67,5 @@ public interface LessonService
      * @param username The name of the user whose lessons to search
      * @param page Page of the returning data
      */
-    PageRetrievalResult<Lesson> searchLessons(String searchQuery, String username, int page);
+    PageRetrievalResult<LessonDTO> searchLessons(String searchQuery, String username, int page);
 }

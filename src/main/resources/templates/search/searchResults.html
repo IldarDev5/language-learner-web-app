@@ -6,6 +6,9 @@
 <body>
     <div tiles:fragment="content">
         <script type="text/javascript" src="/scripts/search.js"></script>
+        <script type="text/javascript">
+            searchText = "<th:block th:text='${searchQuery}' />";
+        </script>
 
         <h2>Search Results</h2>
         <!--@thymesVar id="searchQuery" type="java.lang.String"-->
