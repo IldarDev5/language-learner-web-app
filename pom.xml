@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>ru.ildar.languagelearner</groupId>
-  <artifactId>LanguageLearner</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <artifactId>languagelearner</artifactId>
+  <version>1.0</version>
   <packaging>war</packaging>
 
-  <name>LanguageLearner</name>
+  <name>languagelearner</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -201,7 +201,7 @@
                 <spring.datasource.password>ildar</spring.datasource.password>
             </properties>
             <build>
-                <finalName>swfboottestopenshiftapp</finalName>
+                <finalName>languagelearner</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -221,7 +221,7 @@
             <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
             <id>openshift</id>
             <build>
-                <finalName>swfboottestopenshiftapp</finalName>
+                <finalName>languagelearner</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
