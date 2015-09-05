@@ -58,6 +58,7 @@ public class ClusterControllerTest extends BaseControllerTest
         verify(clusterServiceMock).getNonExistentLanguagePair(nickname);
         verify(languageServiceMock).getLanguagesAsStrings();
         verify(appUserServiceMock).getUserByNickname(nickname);
+        verify(lessonServiceMock).getLessonsNotTakenLongestTime(Mockito.any(Integer.class), Mockito.anyString());
         verifyNoMoreInteractions(services);
     }
 
@@ -78,6 +79,7 @@ public class ClusterControllerTest extends BaseControllerTest
         verify(appUserServiceMock).getUserByNickname(nickname);
         verify(clusterServiceMock).getNonExistentLanguagePair(nickname);
         verify(languageServiceMock).getLanguagesAsStrings();
+        verify(lessonServiceMock).getLessonsNotTakenLongestTime(Mockito.any(Integer.class), Mockito.anyString());
         verifyNoMoreInteractions(services);
     }
 
@@ -102,6 +104,7 @@ public class ClusterControllerTest extends BaseControllerTest
         verify(clusterServiceMock).getNonExistentLanguagePair(nickname);
         verify(languageServiceMock).getLanguagesAsStrings();
         verify(clusterServiceMock).addCluster(Mockito.any(ClusterDTO.class), anyString());
+        verify(lessonServiceMock).getLessonsNotTakenLongestTime(Mockito.any(Integer.class), Mockito.anyString());
         verifyNoMoreInteractions(services);
     }
 
@@ -128,6 +131,7 @@ public class ClusterControllerTest extends BaseControllerTest
         verify(clusterServiceMock).getNonExistentLanguagePair(nickname);
         verify(languageServiceMock).getLanguagesAsStrings();
         verify(clusterServiceMock).addCluster(Mockito.any(ClusterDTO.class), anyString());
+        verify(lessonServiceMock).getLessonsNotTakenLongestTime(Mockito.any(Integer.class), Mockito.anyString());
         verifyNoMoreInteractions(services);
     }
 
@@ -154,6 +158,7 @@ public class ClusterControllerTest extends BaseControllerTest
         verify(clusterServiceMock).getNonExistentLanguagePair(nickname);
         verify(languageServiceMock).getLanguagesAsStrings();
         verify(clusterServiceMock).addCluster(Mockito.any(ClusterDTO.class), anyString());
+        verify(lessonServiceMock).getLessonsNotTakenLongestTime(Mockito.any(Integer.class), Mockito.anyString());
         verifyNoMoreInteractions(services);
     }
 
@@ -179,6 +184,7 @@ public class ClusterControllerTest extends BaseControllerTest
         assertThat(strCaptor.getValue(), is(nickname));
 
         verify(appUserServiceMock).getUserByNickname(nickname);
+        verify(lessonServiceMock).getLessonsNotTakenLongestTime(Mockito.any(Integer.class), Mockito.anyString());
         verifyNoMoreInteractions(services);
     }
 
@@ -199,6 +205,7 @@ public class ClusterControllerTest extends BaseControllerTest
 
         verify(clusterServiceMock).getClustersOfUser(nickname);
         verify(appUserServiceMock).getUserByNickname(nickname);
+        verify(lessonServiceMock).getLessonsNotTakenLongestTime(Mockito.any(Integer.class), Mockito.anyString());
         verifyNoMoreInteractions(services);
     }
 
@@ -221,6 +228,7 @@ public class ClusterControllerTest extends BaseControllerTest
 
         verify(clusterServiceMock).checkClusterOwner(clusterId, nickname);
         verify(appUserServiceMock).getUserByNickname(this.nickname);
+        verify(lessonServiceMock).getLessonsNotTakenLongestTime(Mockito.any(Integer.class), Mockito.anyString());
         verifyNoMoreInteractions(services);
     }
 
@@ -243,6 +251,7 @@ public class ClusterControllerTest extends BaseControllerTest
 
         verify(clusterServiceMock).checkClusterOwner(clusterId, nickname);
         verify(appUserServiceMock).getUserByNickname(this.nickname);
+        verify(lessonServiceMock).getLessonsNotTakenLongestTime(Mockito.any(Integer.class), Mockito.anyString());
         verifyNoMoreInteractions(services);
     }
 
@@ -259,6 +268,7 @@ public class ClusterControllerTest extends BaseControllerTest
 
         verify(clusterServiceMock).checkClusterOwner(clusterId, nickname);
         verify(appUserServiceMock).getUserByNickname(this.nickname);
+        verify(lessonServiceMock).getLessonsNotTakenLongestTime(Mockito.any(Integer.class), Mockito.anyString());
         verifyNoMoreInteractions(services);
     }
     

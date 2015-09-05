@@ -18,8 +18,7 @@ import static org.mockito.Mockito.mock;
 @EnableAutoConfiguration(exclude = {
         DataSourceAutoConfiguration.class,
         HibernateJpaAutoConfiguration.class})
-@ComponentScan(basePackageClasses = {WebConfig.class},
-    basePackages = "ru.ildar.languagelearner.controller")
+@ComponentScan(basePackages = {"ru.ildar.languagelearner.config", "ru.ildar.languagelearner.controller"})
 public class TestConfig
 {
     @Bean

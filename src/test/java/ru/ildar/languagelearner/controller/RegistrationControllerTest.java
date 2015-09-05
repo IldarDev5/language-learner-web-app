@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
+import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 import ru.ildar.languagelearner.controller.dto.UserDTO;
 import ru.ildar.languagelearner.exception.EmailAlreadyExistsException;
@@ -147,6 +148,9 @@ public class RegistrationControllerTest extends BaseControllerTest
                 )));
 
         verify(appUserServiceMock).addNewUser(Matchers.any(UserDTO.class));
+        verify(appUserServiceMock).getTotalUsersCount();
+        verify(clusterServiceMock).getMostPopularClusters(Mockito.anyInt());
+        verify(clusterServiceMock).getAvgLessonsCountOfClusters(Mockito.anyInt());
         verifyNoMoreInteractions(appUserServiceMock, userDetailsServiceMock);
     }
 

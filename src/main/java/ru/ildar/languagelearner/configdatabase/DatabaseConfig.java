@@ -1,4 +1,4 @@
-package ru.ildar.languagelearner.config;
+package ru.ildar.languagelearner.configdatabase;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
