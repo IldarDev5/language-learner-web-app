@@ -1,5 +1,6 @@
 package ru.ildar.languagelearner.service;
 
+import ru.ildar.languagelearner.controller.dto.LessonDTO;
 import ru.ildar.languagelearner.controller.dto.PageRetrievalResult;
 import ru.ildar.languagelearner.database.domain.Translation;
 import ru.ildar.languagelearner.exercise.Exerciser;
@@ -56,5 +57,5 @@ public interface TranslationService
      * @param username The name of the user whose translation pairs to search
      * @param page Page of the returning data
      */
-    PageRetrievalResult<Translation> searchTranslations(String searchQuery, String username, int page);
+    PageRetrievalResult<LessonDTO> searchTranslations(String searchQuery, String username, int page);
 }

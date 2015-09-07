@@ -50,8 +50,10 @@ public class SearchController
         return lessonService.searchLessons(searchText, principal.getName(), page);
     }
 
-    @RequestMapping(value = "translationInfo", method = RequestMethod.GET)
-    public PageRetrievalResult<Translation> searchTranslationInfo(
+    @RequestMapping(value = "translationInfo", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON)
+    @ResponseBody
+    public PageRetrievalResult<LessonDTO> searchTranslationInfo(
                                 @RequestParam("searchText") String searchText,
                                 @RequestParam("page") int page,
                                 Principal principal)

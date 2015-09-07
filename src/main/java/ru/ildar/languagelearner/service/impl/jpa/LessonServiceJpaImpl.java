@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ildar.languagelearner.controller.dto.LessonDTO;
 import ru.ildar.languagelearner.controller.dto.PageRetrievalResult;
+import ru.ildar.languagelearner.controller.dto.util.DtoConverter;
 import ru.ildar.languagelearner.database.dao.LessonRepository;
 import ru.ildar.languagelearner.database.domain.Cluster;
 import ru.ildar.languagelearner.database.domain.Lesson;
@@ -128,10 +129,8 @@ public class LessonServiceJpaImpl implements LessonService
                 username, pageRequest);
 
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-        return new PageRetrievalResult<>(lessons.getContent().stream().map((l) ->
-                new LessonDTO(l.getLessonId(), l.getLessonName(),
-                              l.getDescription(), l.averageGrade(), fmt.format(l.getAddDate()),
-                              l.getAddDate(), l.getTranslationsCount())).collect(toList()),
+        return new PageRetrievalResult<>(lessons.getContent().stream()
+                .map(DtoConverter::convertLessonToDTO).collect(toList()),
                 lessons.getTotalPages());
     }
 }

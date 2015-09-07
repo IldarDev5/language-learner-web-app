@@ -5,7 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.ildar.languagelearner.controller.dto.LessonDTO;
 import ru.ildar.languagelearner.controller.dto.PageRetrievalResult;
+import ru.ildar.languagelearner.controller.dto.util.DtoConverter;
 import ru.ildar.languagelearner.exception.LessonNotFoundException;
 import ru.ildar.languagelearner.exercise.Exerciser;
 import ru.ildar.languagelearner.controller.dto.TranslationDTO;
@@ -18,7 +20,10 @@ import ru.ildar.languagelearner.service.TranslationService;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
+import static ru.ildar.languagelearner.controller.dto.util.DtoConverter.convertLessonToDTO;
+import static ru.ildar.languagelearner.controller.dto.util.DtoConverter.convertTranslationToDTO;
 
 @Service("translationService")
 @Transactional
@@ -87,8 +92,7 @@ public class TranslationServiceJpaImpl implements TranslationService
 
         List<Translation> translations = translationRepository.findByLesson_LessonId(lessonId);
         List<TranslationDTO> translationDTOs = translations.stream()
-                .map((tr) -> new TranslationDTO(tr.getTranslationId(),
-                        tr.getSentence1(), tr.getSentence2()))
+                .map(DtoConverter::convertTranslationToDTO)
                 .collect(toList());
         exerciser.setCorrectTranslations(translationDTOs);
     }
@@ -121,11 +125,22 @@ public class TranslationServiceJpaImpl implements TranslationService
 
     @Override
     @Transactional(readOnly = true)
-    public PageRetrievalResult<Translation> searchTranslations(String searchQuery, String username, int page)
+    public PageRetrievalResult<LessonDTO> searchTranslations(String searchQuery, String username, int page)
     {
-        PageRequest pageRequest = new PageRequest(page, TRANSLATIONS_PER_PAGE);
+        PageRequest pageRequest = new PageRequest(page - 1, TRANSLATIONS_PER_PAGE);
         Page<Translation> ret = translationRepository.searchTranslationPairs(searchQuery.toLowerCase(),
                 username, pageRequest);
-        return new PageRetrievalResult<>(ret.getContent(), ret.getTotalPages());
+
+        /* Group translations by their lessons, and then make this query return LessonDTOs with
+           translations converted to DTOs and set to the field translations of LessonDTOs */
+        List<LessonDTO> lessons = ret.getContent().stream()
+                .collect(groupingBy(Translation::getLesson))
+                .entrySet().stream().map((pair) -> {
+                    LessonDTO dto = convertLessonToDTO(pair.getKey());
+                    dto.setTranslations(pair.getValue().stream()
+                            .map(DtoConverter::convertTranslationToDTO).collect(toList()));
+                    return dto;
+                }).collect(toList());
+        return new PageRetrievalResult<>(lessons, ret.getTotalPages());
     }
 }
